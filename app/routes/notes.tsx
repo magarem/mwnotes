@@ -16,6 +16,11 @@ export default function NotesPage() {
   const data = useLoaderData<typeof loader>();
   const user = useUser();
 
+  const folderNew = () => {
+    let a = prompt("Nome da pasta")
+    folderNew(a)
+ }
+
   return (
     <div className="flex h-full min-h-screen flex-col">
       <header className="flex pt-6 items-center justify-between bg-slate-800 p-2 text-white no-underline">
@@ -35,6 +40,9 @@ export default function NotesPage() {
 
       <main className="flex h-full">
         <div className="h-full w-81 ">
+          <Link to="new" className="no-underline block p-2 ml-7 text-base text-greew-300">
+            + Nova pasta
+          </Link>
           <Link to="new" className="no-underline block p-2 ml-7 text-base text-greew-300">
             + Nova nota
           </Link>

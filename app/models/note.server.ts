@@ -1,4 +1,4 @@
-import type { User, Note } from "@prisma/client";
+import type { User, Note, Folder } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 var fs = require("fs");
@@ -15,6 +15,18 @@ export function getNote({
     where: { id, userId },
   });
 }
+
+
+export async function getFolderListItems({ userId }: { userId: User["id"] }) {
+  console.log('userId', userId);
+  
+  return await prisma.folder.findMany({
+    where: { userId },
+    select: { id: true, name: true },
+    orderBy: { updatedAt: "desc" },
+  })||[];
+}
+
 
 export async function getNoteListItems({ userId }: { userId: User["id"] }) {
   console.log('userId', userId);
@@ -73,12 +85,36 @@ const slugify = str =>
   .replace(/[^\w-]+/g, '')
   .replace(/--+/g, '-')
 
+
+
+
+
+  export function folderCreate({folderName, userId}: any) {
+    console.log(folderName);
+    return prisma.folder.create({
+      data: {
+        name: folderName,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
+
+
+
+
+
 export function createNote({
+  folder,
   body,
   title,
   img,
   userId,
-}: Pick<Note, "body" | "title" | "img"> & {
+}: Pick<Note, "folder" | "body" | "title" | "img"> & {
   userId: User["id"];
 }) {
 
@@ -91,6 +127,7 @@ export function createNote({
   // writeStream.end();
   return prisma.note.create({
     data: {
+      folder,
       title,
       body,
       img,

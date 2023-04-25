@@ -6,7 +6,7 @@ import { createClient } from '@supabase/supabase-js'
 import { json } from "@remix-run/node";
 import React from 'react';
 import { v4 as uuidv4 } from "uuid";
-import { ActionArgs, LoaderArgs } from '@remix-run/server-runtime';
+import { ActionArgs, LoaderArgs, redirect } from '@remix-run/server-runtime';
 import { getUserId } from "../session.server";
 import  Modal  from "../components/modal"
 import { useLoaderData, useSearchParams } from '@remix-run/react';
@@ -61,8 +61,14 @@ export const loader = async ({request}: LoaderArgs) => {
       SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW!,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
     }
+
+    if (!userId) {
+        return redirect("/login");
+      }else{
+        return json({ userId, env })
+      }
   
-    return json({ userId, env })
+    
   }
 
 // export async function loader({ request }: LoaderArgs) {
@@ -353,13 +359,13 @@ export default function imagemanager() {
     }
 
     return (
-        <div >
+        <div>
             
-            <div className=' text-white pt-10 text-center' style={{width: '80%', margin: 'auto'}}>
-                <h3>Gerenciador de arquivos</h3>
-                user: {user} url: {url} bucket: {bucket}<br/>
+            <div className=' text-white pt-10 pb-2 text-center' style={{width: '80%', margin: 'auto'}}>
+                <h4>Gerenciador de arquivos</h4>
+                {/* user: {user} url: {url} bucket: {bucket}<br/>
                 selectFile:{selectFile} fileCopyAction: {fileCopyAction}<br/>
-                folderCopyAction: {folderCopyAction}
+                folderCopyAction: {folderCopyAction} */}
 
             </div>
             
