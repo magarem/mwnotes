@@ -16,7 +16,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   password Password?
-  notes    Note[]
+  note     Note[]
   folder   Folder[]
 }
 
@@ -26,9 +26,24 @@ model Password {
   userId String @unique
 }
 
+model Folder {
+  id   String @id @default(cuid())
+  pid  String @default("")
+  name String
+  img  String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User  @relation(fields: [userId], references: [id])
+  userId String
+
+  note  Note[] 
+}
+
 model Note {
   id     String @id @default(cuid())
-  folder String @default("")
+  folder Folder @relation(fields: [folderId], references: [id])
+  folderId String
   title  String
   body   String
   img    String @default("")
@@ -40,14 +55,4 @@ model Note {
   userId String
 }
 
-model Folder {
-  id    String @id @default(cuid())
-  pid    String @default("")
-  name String
-  img String @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
-}

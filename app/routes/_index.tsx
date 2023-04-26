@@ -23,7 +23,7 @@ export default function Index() {
             <div className="relative px-4 pb-8 pt-5 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-15">
               <h3 className="text-center text-4xl font-extrabold tracking-tight sm:text-4xl lg:text-4xl">
                 <span className="block uppercase text-yellow-500 drop-shadow-md">
-                  MW Notes
+                  MW Notes2
                 </span>
               </h3>
               {/* <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">

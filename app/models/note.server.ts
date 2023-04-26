@@ -33,8 +33,8 @@ export async function getNoteListItems({ userId }: { userId: User["id"] }) {
   
   return await prisma.note.findMany({
     where: { userId },
-    select: { id: true, title: true },
-    orderBy: { updatedAt: "desc" },
+    select: { id: true, title: true, folder: true },
+    orderBy: [ {folder: {name: "asc" }}, {updatedAt: "desc" }],
   })||[];
 }
 
@@ -127,7 +127,11 @@ export function createNote({
   // writeStream.end();
   return prisma.note.create({
     data: {
-      folder,
+      folder: {
+        connect: {
+          id: folder,
+        }
+      },
       title,
       body,
       img,
