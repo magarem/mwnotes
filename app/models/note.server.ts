@@ -33,7 +33,7 @@ export async function getNoteListItems({ userId }: { userId: User["id"] }) {
   
   return await prisma.note.findMany({
     where: { userId },
-    select: { id: true, title: true, folder: true },
+    select: { id: true, title: true, folder: true, folderId: true },
     orderBy: [ {folderId: "asc" }, {updatedAt: "desc" }],
   })||[];
 }
