@@ -31,17 +31,17 @@ export async function action({ request }: ActionArgs) {
 
   if (typeof password !== "string" || password.length === 0) {
     return json(
-      { errors: { email: null, password: "Password is required" } },
+      { errors: { email: null, password: "Digite a senha" } },
       { status: 400 }
     );
   }
 
-  if (password.length < 8) {
-    return json(
-      { errors: { email: null, password: "Password is too short" } },
-      { status: 400 }
-    );
-  }
+  // if (password.length < 5) {
+  //   return json(
+  //     { errors: { email: null, password: "Password is too short" } },
+  //     { status: 400 }
+  //   );
+  // }
 
   const user = await verifyLogin(email, password);
 
