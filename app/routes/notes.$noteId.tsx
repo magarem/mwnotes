@@ -55,7 +55,7 @@ export default function NoteDetailsPage() {
   return (
     <div className="bg-dark text-slate-50">
       <h3 className="text-2xl font-bold">{data.note.title}</h3>
-      <p className="py-6"><pre>{data.note.body}</pre></p>
+      <div dangerouslySetInnerHTML={{__html: data.note.body.replace(/\n/g, '<br />')}} />
       <p className="py-6">{data.note.img&&<img src={`${data.note.img}`} alt="dd" style={{width: '100px'}}/>}</p>
       {/* <hr className="my-4" /> */}
       <Form method="post">

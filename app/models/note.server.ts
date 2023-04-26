@@ -1,4 +1,4 @@
-import type { User, Note, Folder } from "@prisma/client";
+import type { User, Note } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 var fs = require("fs");

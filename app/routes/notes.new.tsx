@@ -129,14 +129,14 @@ export default function NewNotePage() {
       >
         <div>
           {/* <label className="flex w-full flex-col gap-1  text-gray-50"> */}
-            <label for="folder" className="flex w-full flex-col gap-1  text-gray-50">Pasta
+            <label htmlFor="folder" className="flex w-full flex-col gap-1  text-gray-50">Pasta
             <select id="folder" name="folder" className="w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6">
              {data.folders.map((item: any)=>
               <option key={item.id} value={item.id}>{item.name}</option>
              )}
             </select>
             </label>
-            <label for="title" className="flex w-full flex-col gap-1  text-gray-50">Titulo: 
+            <label htmlFor="title" className="flex w-full flex-col gap-1  text-gray-50">Titulo: 
             <input
               ref={titleRef}
               id="title"
@@ -147,11 +147,8 @@ export default function NewNotePage() {
                 actionData?.errors?.title ? "title-error" : undefined
               }
             />
-
           </label>
-          
         </div>
-
         <div>
           <label className="flex w-full flex-col gap-1  text-gray-50">
             <span>Texto: </span>

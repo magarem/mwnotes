@@ -18,10 +18,10 @@ export default function NotesPage() {
   const data = useLoaderData<typeof loader>();
   const user = useUser();
 
-  const folderNew = () => {
-    let a = prompt("Nome da pasta")
-    folderNew(a)
- }
+//   const folderNew = () => {
+//     let a = prompt("Nome da pasta")
+//     folderNew(a)
+//  }
 
   return (
     <div className="flex h-full min-h-screen flex-col">
@@ -43,16 +43,14 @@ export default function NotesPage() {
       <main className="flex h-full">
      
         <div className="h-full w-1/5 ">
-        <div class="inline-flex rounded-md shadow-sm h-100 mt-3 pl-3" role="group">
-        
-        <button  onClick={() => navigate("/folderNew")} type="button" className="px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700 text-white">
-          + pasta
-        </button> 
-        <button type="button" onClick={() => navigate("new")}  className="px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700  text-white">
-          + nota
-        </button>
-      </div>
-
+        <div className="inline-flex rounded-md shadow-sm h-100 mt-3 pl-3" role="group">
+          <button  onClick={() => navigate("/folderNew")} type="button" className="px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700 text-white">
+            + pasta
+          </button> 
+          <button type="button" onClick={() => navigate("new")}  className="px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700  text-white">
+            + nota
+          </button>
+        </div>
 {/*     
           <Link to="/folderNew" className="no-underline block p-2 ml-7 text-base text-greew-300">
             + Nova pasta
@@ -70,12 +68,12 @@ export default function NotesPage() {
               {data.noteListItems.map((note, index) => {
                 // let a = note.folder
                 return (
-                <>
+                <div key={note.id} >
                   {/* {note.folder.name} */}
                   {index==0&&<div className="text-slate-100">{note.folder.name}</div>}
                   {data.noteListItems[index==0?0:index-1].folder.id!==data.noteListItems[index].folder.id&&<div className="text-slate-100">{note.folder.name}</div>}
                   <ul className="flex space-x-3">
-                  <li key={note.id} className="text-slate-300">
+                  <li className="text-slate-300">
                     <NavLink
                       className={({ isActive }) =>
                         `block no-underline p-1 text-base ${isActive ? "text-green-400" : "text-slate-100"}`
@@ -86,7 +84,7 @@ export default function NotesPage() {
                     </NavLink>
                   </li>
                   </ul>
-                </>
+                </div>
               )})}
             </ol>
           )}
