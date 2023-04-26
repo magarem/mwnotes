@@ -9,7 +9,9 @@ import { safeRedirect, validateEmail } from "~/utils";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
-  if (userId) return redirect("/");
+  console.log('-->userId:', userId);
+  
+  // if (userId) return redirect("/");
   return json({});
 }
 

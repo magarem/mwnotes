@@ -10,7 +10,7 @@ import { safeRedirect, validateEmail } from "~/utils";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
-  if (userId) return redirect("/");
+  // if (userId) return redirect("/");
   return json({});
 }
 
@@ -34,7 +34,7 @@ export async function action({ request }: ActionArgs) {
     );
   }
 
-  if (password.length < 8) {
+  if (password.length < 5) {
     return json(
       { errors: { email: null, password: "Password is too short" } },
       { status: 400 }

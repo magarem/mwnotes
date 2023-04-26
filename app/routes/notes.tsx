@@ -82,7 +82,7 @@ export default function NotesPage() {
                       }
                       to={note.id}
                     >
-                       {note.folder.name} {note.title}
+                       {note.title}
                     </NavLink>
                   </li>
                   </ul>
