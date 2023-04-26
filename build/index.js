@@ -366,7 +366,9 @@ async function getFolderListItems({ userId }) {
 }
 async function getNoteListItems({ userId }) {
   return console.log("userId", userId), await prisma.note.findMany({
-    where: { userId }
+    where: { userId },
+    select: { id: !0, title: !0, folder: !0, folderId: !0 },
+    orderBy: [{ folderId: "asc" }, { updatedAt: "desc" }]
   });
 }
 function updateNote(obj) {
