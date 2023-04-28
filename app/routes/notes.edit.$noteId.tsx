@@ -143,7 +143,7 @@ export default function EditNotePage() {
       }}
     >
       <div>
-        <label className="flex w-full flex-col gap-1">
+        <label className="flex w-full flex-col gap-1 text-white">
           <input
             ref={idRef}
             hidden
@@ -151,13 +151,13 @@ export default function EditNotePage() {
             defaultValue={data.note.id}
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
           />
-          <span>Title: </span>
+          <span>Titulo: </span>
           <input
             ref={titleRef}
             id="title"
             name="title"
             defaultValue={data.note.title}
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className=" text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
             aria-invalid={actionData?.errors?.title ? true : undefined}
             aria-errormessage={
               actionData?.errors?.title ? "title-error" : undefined
@@ -172,8 +172,8 @@ export default function EditNotePage() {
       </div>
 
       <div>
-        <label className="flex w-full flex-col gap-1">
-          <span>Body: </span>
+        <label className="flex w-full flex-col gap-1 text-white">
+          <span>Nota: </span>
           <textarea
             ref={bodyRef}
             name="body"
@@ -193,22 +193,22 @@ export default function EditNotePage() {
           </div>
         )}
       </div>
-      <div>
+      {/* <div>
         <label>
           <span>Sem imagem: </span>
           <input ref={noimageRef} type="checkbox" id="noimage" name="noimage" value="true"/>
         </label>
-      </div>
+      </div> */}
       <div>
-        <label className="flex w-full flex-col gap-1">
+        <label className="flex w-full flex-col gap-1 text-white">
           <span>Img: </span>
           <input
             ref={imageRef}
             name="image"
             defaultValue={data.note.img}
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            className=" text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
           />
-          <input type="file" name="image" onChange={handleFileSelected} />
+          {/* <input type="file" name="image" onChange={handleFileSelected} /> */}
         </label>
       </div>
 

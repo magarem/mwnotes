@@ -1,5 +1,5 @@
 import { ActionArgs, redirect } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData } from "@remix-run/react";
 import * as React from "react";
 
 import { folderCreate } from "~/models/note.server";
@@ -67,7 +67,7 @@ export default function NewNotePage() {
   }
 
   return (
-    <div>
+    <div className="p-10">
       <Form
         name="form1"
         method="post"
@@ -79,9 +79,11 @@ export default function NewNotePage() {
         }}
       >
         <div>
+          <h2 className="text-gray-50">Nova pasta</h2>
           <label className="flex w-full flex-col gap-1  text-gray-50">
-            <span>Nome da pasta: </span>
+            <span>Nome: </span>
             <input
+              autoFocus
               ref={folderNameRef}
               id="folderName"
               name="folderName"
@@ -90,12 +92,14 @@ export default function NewNotePage() {
           </label>
         </div>
         <div className="text-left mt-3">
+         
           <button
             type="submit"
             className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
           >
             Salvar
-          </button>
+          </button>{' '}
+          <Link to="/notes" >Cencelar</Link>
         </div>
       </Form>
     </div>
