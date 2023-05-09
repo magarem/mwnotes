@@ -3,7 +3,7 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import * as React from "react";
 
-import { useSubmit, Form } from "react-router-dom";
+import { useSubmit } from "react-router-dom";
 import { createNote, getFolderListItems, getNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
@@ -12,7 +12,7 @@ import { createClient } from '@supabase/supabase-js'
 import { v4 as uuidv4 } from "uuid";
 // import { Col, Card, Button, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Card } from "react-bootstrap";
 import invariant from "tiny-invariant";
 // import Row from "react-bootstrap/esm/Row";

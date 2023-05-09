@@ -2,7 +2,7 @@ import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import * as React from "react";
-import { useSubmit, Form } from "react-router-dom";
+import { useSubmit } from "react-router-dom";
 import { createNote, getNote, updateNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 

@@ -10,7 +10,7 @@ import { createClient } from '@supabase/supabase-js'
 import { v4 as uuidv4 } from "uuid";
 // import { Col, Card, Button, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Card } from "react-bootstrap";
 // import Row from "react-bootstrap/esm/Row";
 // import { Col, Card } from "react-bootstrap";

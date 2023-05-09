@@ -5,7 +5,7 @@ import * as React from "react";
 import {  getProjectList } from "~/models/project.server";
 import { requireUserId } from "~/session.server";
 import { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 export async function loader({ request, params }: LoaderArgs) {
   
