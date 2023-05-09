@@ -34,7 +34,7 @@ var entry_server_exports = {};
 __export(entry_server_exports, {
   default: () => handleRequest
 });
-var import_node_stream = require("stream"), import_node = require("@remix-run/node"), import_react = require("@remix-run/react"), import_isbot = __toESM(require("isbot")), import_server = require("react-dom/server"), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), ABORT_DELAY = 5e3;
+var import_node_stream = require("stream"), import_node = require("@remix-run/node"), import_react = require("@remix-run/react"), import_isbot = __toESM(require("isbot")), import_server = require("react-dom/server"), import_jsx_runtime = require("react/jsx-runtime"), ABORT_DELAY = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return (0, import_isbot.default)(request.headers.get("user-agent")) ? handleBotRequest(
     request,
@@ -51,21 +51,13 @@ function handleRequest(request, responseStatusCode, responseHeaders, remixContex
 function handleBotRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return new Promise((resolve, reject) => {
     let { pipe, abort } = (0, import_server.renderToPipeableStream)(
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
         import_react.RemixServer,
         {
           context: remixContext,
           url: request.url,
           abortDelay: ABORT_DELAY
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/entry.server.tsx",
-          lineNumber: 45,
-          columnNumber: 7
-        },
-        this
+        }
       ),
       {
         onAllReady() {
@@ -91,21 +83,13 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
 function handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return new Promise((resolve, reject) => {
     let { pipe, abort } = (0, import_server.renderToPipeableStream)(
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
         import_react.RemixServer,
         {
           context: remixContext,
           url: request.url,
           abortDelay: ABORT_DELAY
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/entry.server.tsx",
-          lineNumber: 87,
-          columnNumber: 7
-        },
-        this
+        }
       ),
       {
         onShellReady() {
@@ -139,7 +123,7 @@ __export(root_exports, {
 var import_node3 = require("@remix-run/node"), import_react2 = require("@remix-run/react");
 
 // app/styles/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-4CLOJHFZ.css";
+var tailwind_default = "/build/_assets/tailwind-J76I633P.css";
 
 // app/session.server.ts
 var import_node2 = require("@remix-run/node"), import_tiny_invariant = __toESM(require("tiny-invariant"));
@@ -149,7 +133,7 @@ var import_bcryptjs = __toESM(require("bcryptjs"));
 
 // app/db.server.ts
 var import_client = require("@prisma/client"), prisma;
-global.__db__ || (global.__db__ = new import_client.PrismaClient()), prisma = global.__db__, prisma.$connect();
+prisma = new import_client.PrismaClient();
 
 // app/models/user.server.ts
 var import_supabase_js = require("@supabase/supabase-js"), supabaseUrl = process.env.SUPABASE_URL_RAW, supabaseKey = process.env.SUPABASE_ANON_KEY, supabase = (0, import_supabase_js.createClient)(supabaseUrl, supabaseKey, {
@@ -211,7 +195,7 @@ var sessionStorage = (0, import_node2.createCookieSessionStorage)({
     path: "/",
     sameSite: "lax",
     secrets: [process.env.SESSION_SECRET],
-    secure: !1
+    secure: !0
   }
 }), USER_SESSION_KEY = "userId";
 async function getSession(request) {
@@ -263,7 +247,7 @@ async function logout(request) {
 }
 
 // app/root.tsx
-var import_jsx_dev_runtime2 = require("react/jsx-dev-runtime"), links = () => [
+var import_jsx_runtime2 = require("react/jsx-runtime"), links = () => [
   { rel: "stylesheet", href: tailwind_default },
   {
     rel: "stylesheet",
@@ -276,64 +260,20 @@ async function loader({ request }) {
   });
 }
 function App() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("html", { lang: "en", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("head", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("meta", { charSet: "utf-8" }, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 35,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("meta", { name: "viewport", content: "width=device-width,initial-scale=1" }, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 36,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Meta, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 37,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Links, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 38,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/root.tsx",
-      lineNumber: 34,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("body", { className: "h-full bg-dark", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Outlet, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 41,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.ScrollRestoration, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 42,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Scripts, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 43,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.LiveReload, {}, void 0, !1, {
-        fileName: "app/root.tsx",
-        lineNumber: 44,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/root.tsx",
-      lineNumber: 40,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/root.tsx",
-    lineNumber: 33,
-    columnNumber: 5
-  }, this);
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("html", { lang: "en", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("head", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("meta", { charSet: "utf-8" }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("meta", { name: "viewport", content: "width=device-width,initial-scale=1" }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.Meta, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.Links, {})
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("body", { className: "h-full bg-dark", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.Outlet, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.ScrollRestoration, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.Scripts, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.LiveReload, {})
+    ] })
+  ] });
 }
 
 // app/routes/api.$userid.note.$noteid.show.tsx
@@ -435,7 +375,7 @@ function deleteNote({
 }
 
 // app/routes/notes.edit.$noteId.tsx
-var import_react4 = require("react"), import_supabase_js2 = require("@supabase/supabase-js"), import_uuid = require("uuid"), import_jsx_dev_runtime3 = require("react/jsx-dev-runtime"), supabase2 = (0, import_supabase_js2.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
+var import_react4 = require("react"), import_supabase_js2 = require("@supabase/supabase-js"), import_uuid = require("uuid"), import_jsx_runtime3 = require("react/jsx-runtime"), supabase2 = (0, import_supabase_js2.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
 async function loader3({ request, params }) {
   let userId = await requireUserId(request), note = await getNote({ userId, id: params.noteId }) || {};
   if (console.log(11, note), !note)
@@ -483,7 +423,7 @@ function EditNotePage() {
       { method: "post" }
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
     import_react_router_dom.Form,
     {
       name: "form1",
@@ -495,9 +435,9 @@ function EditNotePage() {
         width: "100%"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "input",
               {
                 ref: idRef,
@@ -505,22 +445,10 @@ function EditNotePage() {
                 name: "id",
                 defaultValue: data2.note.id,
                 className: "flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/notes.edit.$noteId.tsx",
-                lineNumber: 150,
-                columnNumber: 11
-              },
-              this
+              }
             ),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Titulo: " }, void 0, !1, {
-              fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 157,
-              columnNumber: 11
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "Titulo: " }),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "input",
               {
                 ref: titleRef,
@@ -530,39 +458,15 @@ function EditNotePage() {
                 className: " text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose",
                 "aria-invalid": (_a = actionData == null ? void 0 : actionData.errors) != null && _a.title ? !0 : void 0,
                 "aria-errormessage": (_b = actionData == null ? void 0 : actionData.errors) != null && _b.title ? "title-error" : void 0
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/notes.edit.$noteId.tsx",
-                lineNumber: 158,
-                columnNumber: 11
-              },
-              this
+              }
             )
-          ] }, void 0, !0, {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 149,
-            columnNumber: 9
-          }, this),
-          ((_c = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _c.title) && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "pt-1 text-red-700", id: "title-error", children: actionData.errors.title }, void 0, !1, {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 171,
-            columnNumber: 11
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 148,
-          columnNumber: 7
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Nota: " }, void 0, !1, {
-              fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 179,
-              columnNumber: 11
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+          ] }),
+          ((_c = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _c.title) && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "pt-1 text-red-700", id: "title-error", children: actionData.errors.title })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "Nota: " }),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "textarea",
               {
                 ref: bodyRef,
@@ -572,125 +476,45 @@ function EditNotePage() {
                 className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
                 "aria-invalid": (_d = actionData == null ? void 0 : actionData.errors) != null && _d.body ? !0 : void 0,
                 "aria-errormessage": (_e = actionData == null ? void 0 : actionData.errors) != null && _e.body ? "body-error" : void 0
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/notes.edit.$noteId.tsx",
-                lineNumber: 180,
-                columnNumber: 11
-              },
-              this
+              }
             )
-          ] }, void 0, !0, {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 178,
-            columnNumber: 9
-          }, this),
-          ((_f = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _f.body) && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "pt-1 text-red-700", id: "body-error", children: actionData.errors.body }, void 0, !1, {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 194,
-            columnNumber: 11
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 177,
-          columnNumber: 7
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Tags: " }, void 0, !1, {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 208,
-            columnNumber: 11
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+          ] }),
+          ((_f = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _f.body) && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "pt-1 text-red-700", id: "body-error", children: actionData.errors.body })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "Tags: " }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
             "input",
             {
               ref: tagsRef,
               name: "tags",
               defaultValue: data2.note.tags,
               className: " text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 209,
-              columnNumber: 11
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 207,
-          columnNumber: 9
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 206,
-          columnNumber: 7
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Img: " }, void 0, !1, {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 221,
-            columnNumber: 11
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "Img: " }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
             "input",
             {
               ref: imageRef,
               name: "image",
               defaultValue: data2.note.img,
               className: " text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 222,
-              columnNumber: 11
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 220,
-          columnNumber: 9
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 219,
-          columnNumber: 7
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
           "button",
           {
             type: "submit",
             className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
             children: "Save"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 233,
-            columnNumber: 9
-          },
-          this
-        ) }, void 0, !1, {
-          fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 232,
-          columnNumber: 7
-        }, this)
+          }
+        ) })
       ]
-    },
-    void 0,
-    !0,
-    {
-      fileName: "app/routes/notes.edit.$noteId.tsx",
-      lineNumber: 137,
-      columnNumber: 5
-    },
-    this
+    }
   );
 }
 
@@ -703,7 +527,7 @@ __export(notes_noteId_exports, {
   loader: () => loader4
 });
 var import_node5 = require("@remix-run/node"), import_react5 = require("@remix-run/react"), import_tiny_invariant2 = __toESM(require("tiny-invariant"));
-var import_react6 = require("@remix-run/react"), import_jsx_dev_runtime4 = require("react/jsx-dev-runtime");
+var import_react6 = require("@remix-run/react"), import_jsx_runtime4 = require("react/jsx-runtime");
 async function loader4({ request, params }) {
   let env = {
     SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW,
@@ -721,97 +545,41 @@ async function action2({ request, params }) {
 }
 function NoteDetailsPage() {
   let data2 = (0, import_react5.useLoaderData)(), CDNURL = "", navigate = (0, import_react6.useNavigate)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "bg-dark text-slate-50", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-2xl font-bold", children: data2.note.title }, void 0, !1, {
-      fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 54,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { dangerouslySetInnerHTML: { __html: data2.note.body.replace(/\n/g, "<br />") } }, void 0, !1, {
-      fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 55,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "py-6", children: data2.note.img && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("img", { src: `${data2.note.img}`, alt: "dd", style: { width: "100px" } }, void 0, !1, {
-      fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 56,
-      columnNumber: 43
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 56,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_react5.Form, { method: "post", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "bg-dark text-slate-50", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { className: "text-2xl font-bold", children: data2.note.title }),
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { dangerouslySetInnerHTML: { __html: data2.note.body.replace(/\n/g, "<br />") } }),
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "py-6", children: data2.note.img && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: `${data2.note.img}`, alt: "dd", style: { width: "100px" } }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_react5.Form, { method: "post", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
         "button",
         {
           type: "button",
           onClick: () => navigate("/notes/edit/" + data2.note.id),
           className: "rounded bg-blue-500 px-4 py-1 text-white hover:bg-blue-600 focus:bg-blue-400",
           children: "Edit"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/notes.$noteId.tsx",
-          lineNumber: 59,
-          columnNumber: 9
-        },
-        this
+        }
       ),
       " ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
         "button",
         {
           type: "submit",
           className: "rounded bg-red-500  px-4 py-1 text-white hover:bg-red-800 focus:bg-blue-400",
           children: "Delete"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/notes.$noteId.tsx",
-          lineNumber: 62,
-          columnNumber: 9
-        },
-        this
+        }
       )
-    ] }, void 0, !0, {
-      fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 53,
-    columnNumber: 5
-  }, this);
+    ] })
+  ] });
 }
 function ErrorBoundary() {
   let error = (0, import_react5.useRouteError)();
-  return error instanceof Error ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { children: [
+  return error instanceof Error ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
     "An unexpected error occurred: ",
     error.message
-  ] }, void 0, !0, {
-    fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 77,
-    columnNumber: 12
-  }, this) : (0, import_react5.isRouteErrorResponse)(error) ? error.status === 404 ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { children: "Note not found" }, void 0, !1, {
-    fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 85,
-    columnNumber: 12
-  }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { children: [
+  ] }) : (0, import_react5.isRouteErrorResponse)(error) ? error.status === 404 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { children: "Note not found" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
     "An unexpected error occurred: ",
     error.statusText
-  ] }, void 0, !0, {
-    fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 88,
-    columnNumber: 10
-  }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h1", { children: "Unknown Error" }, void 0, !1, {
-    fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 81,
-    columnNumber: 12
-  }, this);
+  ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { children: "Unknown Error" });
 }
 
 // app/routes/imagemanager.tsx
@@ -823,54 +591,22 @@ __export(imagemanager_exports, {
 var import_react7 = require("react"), import_react_bootstrap = require("react-bootstrap"), import_Button2 = __toESM(require("react-bootstrap/Button")), import_supabase_js3 = require("@supabase/supabase-js"), import_node6 = require("@remix-run/node"), import_react8 = __toESM(require("react")), import_uuid2 = require("uuid"), import_server_runtime2 = require("@remix-run/server-runtime");
 
 // app/components/modal.tsx
-var import_Button = __toESM(require("react-bootstrap/Button")), import_Modal = __toESM(require("react-bootstrap/Modal")), import_jsx_dev_runtime5 = require("react/jsx-dev-runtime");
+var import_Button = __toESM(require("react-bootstrap/Button")), import_Modal = __toESM(require("react-bootstrap/Modal")), import_jsx_runtime5 = require("react/jsx-runtime");
 function Example({ title, children, show, setShow, showFooterButtons }) {
   let handleClose = () => setShow(!1), handleShow = () => setShow(!0);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_jsx_dev_runtime5.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Modal.default, { show, onHide: handleClose, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Modal.default.Header, { closeButton: !0, children: /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Modal.default.Title, { children: title }, void 0, !1, {
-      fileName: "app/components/modal.tsx",
-      lineNumber: 17,
-      columnNumber: 11
-    }, this) }, void 0, !1, {
-      fileName: "app/components/modal.tsx",
-      lineNumber: 16,
-      columnNumber: 9
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Modal.default.Body, { children }, void 0, !1, {
-      fileName: "app/components/modal.tsx",
-      lineNumber: 19,
-      columnNumber: 9
-    }, this),
-    showFooterButtons && /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Modal.default.Footer, { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Button.default, { variant: "secondary", onClick: handleClose, children: "Close" }, void 0, !1, {
-        fileName: "app/components/modal.tsx",
-        lineNumber: 24,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime5.jsxDEV)(import_Button.default, { variant: "primary", onClick: handleClose, children: "Save Changes" }, void 0, !1, {
-        fileName: "app/components/modal.tsx",
-        lineNumber: 27,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/components/modal.tsx",
-      lineNumber: 23,
-      columnNumber: 9
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/components/modal.tsx",
-    lineNumber: 15,
-    columnNumber: 7
-  }, this) }, void 0, !1, {
-    fileName: "app/components/modal.tsx",
-    lineNumber: 12,
-    columnNumber: 5
-  }, this);
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_jsx_runtime5.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_Modal.default, { show, onHide: handleClose, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_Modal.default.Header, { closeButton: !0, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_Modal.default.Title, { children: title }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_Modal.default.Body, { children }),
+    showFooterButtons && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_Modal.default.Footer, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_Button.default, { variant: "secondary", onClick: handleClose, children: "Close" }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_Button.default, { variant: "primary", onClick: handleClose, children: "Save Changes" })
+    ] })
+  ] }) });
 }
 var modal_default = Example;
 
 // app/routes/imagemanager.tsx
-var import_react9 = require("@remix-run/react"), import_tfi = require("react-icons/tfi"), import_jsx_dev_runtime6 = require("react/jsx-dev-runtime"), loader5 = async ({ request }) => {
+var import_react9 = require("@remix-run/react"), import_tfi = require("react-icons/tfi"), import_jsx_runtime6 = require("react/jsx-runtime"), loader5 = async ({ request }) => {
   let userId = await getUserId(request), CDNURL = process.env.SUPABASE_URL_RAW, env = {
     SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
@@ -969,17 +705,9 @@ function imagemanager() {
     let { data: data3, error } = await supabase6.storage.from(bucket).move(user + selectFile, user + "/" + url + "/" + fileName);
     console.log(error), setSelectFile(""), list_files("", url);
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: " text-white pt-10 pb-2 text-center", style: { width: "80%", margin: "auto" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h4", { children: "Gerenciador de arquivos" }, void 0, !1, {
-      fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 366,
-      columnNumber: 17
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 365,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(modal_default, { title: "Renomear arquivo", show: showRenomear, setShow: setShowRenomear, showFooterButtons: !1, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: " text-white pt-10 pb-2 text-center", style: { width: "80%", margin: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { children: "Gerenciador de arquivos" }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(modal_default, { title: "Renomear arquivo", show: showRenomear, setShow: setShowRenomear, showFooterButtons: !1, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       import_react_bootstrap.Form,
       {
         name: "form_rename",
@@ -991,59 +719,23 @@ function imagemanager() {
           gap: 8,
           width: "100%"
         },
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Group, { className: "mb-3", controlId: "formBasicEmail", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Label, { children: "Digite o novo nome" }, void 0, !1, {
-              fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 416,
-              columnNumber: 29
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Control, { type: "text", ref: fileNewNameRef, defaultValue: url.split("/").pop(), name: "fileNewName" }, void 0, !1, {
-              fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 417,
-              columnNumber: 29
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 415,
-            columnNumber: 25
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_react_bootstrap.Form.Group, { className: "mb-3", controlId: "formBasicEmail", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Form.Label, { children: "Digite o novo nome" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Form.Control, { type: "text", ref: fileNewNameRef, defaultValue: url.split("/").pop(), name: "fileNewName" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
             "button",
             {
               type: "submit",
               className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
               children: "Renomear arquivo"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 419,
-              columnNumber: 25
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 414,
-          columnNumber: 21
-        }, this)
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 402,
-        columnNumber: 17
-      },
-      this
-    ) }, void 0, !1, {
-      fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 401,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(modal_default, { title: "Enviar arquivo", show, setShow, showFooterButtons: !1, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+        ] })
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(modal_default, { title: "Enviar arquivo", show, setShow, showFooterButtons: !1, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       import_react_bootstrap.Form,
       {
         ref: formUploadRef,
@@ -1056,280 +748,76 @@ function imagemanager() {
           gap: 8,
           width: "100%"
         },
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Group, { controlId: "formFileSm", className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Control, { type: "file", size: "sm", name: "image", onChange: (event) => handleFileSelected(event), accept: "image" }, void 0, !1, {
-            fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 451,
-            columnNumber: 27
-          }, this) }, void 0, !1, {
-            fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 449,
-            columnNumber: 25
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Form.Group, { controlId: "formFileSm", className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Form.Control, { type: "file", size: "sm", name: "image", onChange: (event) => handleFileSelected(event), accept: "image" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
             "button",
             {
               type: "submit",
               className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
               children: "Enviar arquivo"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 457,
-              columnNumber: 25
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 441,
-          columnNumber: 21
-        }, this)
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 429,
-        columnNumber: 17
-      },
-      this
-    ) }, void 0, !1, {
-      fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 428,
-      columnNumber: 13
-    }, this),
+        ] })
+      }
+    ) }),
     (_a = uploadTxtRef.current) == null ? void 0 : _a.value,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { style: { width: "80%", margin: "auto", marginTop: "10px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup, { className: "mb-3", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => goHome(), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiHome, {}, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 475,
-          columnNumber: 27
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 474,
-          columnNumber: 25
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 473,
-          columnNumber: 21
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => back(), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiArrowCircleLeft, {}, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 480,
-          columnNumber: 29
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 479,
-          columnNumber: 25
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 478,
-          columnNumber: 21
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { width: "80%", margin: "auto", marginTop: "10px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_react_bootstrap.InputGroup, { className: "mb-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_Button2.default, { variant: "primary", onClick: () => goHome(), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_tfi.TfiHome, {}) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_Button2.default, { variant: "primary", onClick: () => back(), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_tfi.TfiArrowCircleLeft, {}) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
           import_react_bootstrap.Form.Control,
           {
             name: "url",
             ref: urlRef,
             defaultValue: url
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 483,
-            columnNumber: 21
-          },
-          this
+          }
         ),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => goUrl(), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiArrowCircleRight, {}, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 491,
-          columnNumber: 29
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 490,
-          columnNumber: 25
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 489,
-          columnNumber: 21
-        }, this),
-        urlType == "img" && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => navigator.clipboard.writeText(data2.env.SUPABASE_URL_RAW + "/storage/v1/object/public/files/" + user + "/" + urlRef.current.value), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiClipboard, {}, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 498,
-          columnNumber: 33
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 497,
-          columnNumber: 29
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 496,
-          columnNumber: 25
-        }, this),
-        (urlType == "folder" || url == "" || url == "/") && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_Button2.default, { variant: "primary", onClick: () => goUrl(), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_tfi.TfiArrowCircleRight, {}) }) }),
+        urlType == "img" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_Button2.default, { variant: "primary", onClick: () => navigator.clipboard.writeText(data2.env.SUPABASE_URL_RAW + "/storage/v1/object/public/files/" + user + "/" + urlRef.current.value), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_tfi.TfiClipboard, {}) }) }),
+        (urlType == "folder" || url == "" || url == "/") && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
           import_react_bootstrap.DropdownButton,
           {
             as: import_react_bootstrap.ButtonGroup,
             title: "Comandos",
             id: "bg-vertical-dropdown-1",
             children: [
-              urlType == "folder" && fileCopyAction && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => fileCopyDo(), children: "Colar" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 515,
-                columnNumber: 29
-              }, this),
-              urlType == "folder" && selectFile && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => movePaste(), children: "Colar" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 519,
-                columnNumber: 29
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "1", onClick: () => goNewFolder(), children: "Nova pasta" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 522,
-                columnNumber: 25
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "2", onClick: () => goUpload(), children: "Enviar arquivo" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 523,
-                columnNumber: 25
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => deleteFolder(), children: "Excluir pasta" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 524,
-                columnNumber: 25
-              }, this)
+              urlType == "folder" && fileCopyAction && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => fileCopyDo(), children: "Colar" }),
+              urlType == "folder" && selectFile && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => movePaste(), children: "Colar" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "1", onClick: () => goNewFolder(), children: "Nova pasta" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "2", onClick: () => goUpload(), children: "Enviar arquivo" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => deleteFolder(), children: "Excluir pasta" })
             ]
-          },
-          void 0,
-          !0,
-          {
-            fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 503,
-            columnNumber: 25
-          },
-          this
+          }
         ),
-        urlType == "img" && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
+        urlType == "img" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
           import_react_bootstrap.DropdownButton,
           {
             as: import_react_bootstrap.ButtonGroup,
             title: "Comandos",
             id: "bg-vertical-dropdown-1",
             children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "4", onClick: () => setShowRenomear(!0), children: "Renomear arquivo" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 533,
-                columnNumber: 29
-              }, this),
-              !fileCopyAction && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "5", onClick: () => setFileCopyAction(url), children: "Copiar arquivo" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 535,
-                columnNumber: 33
-              }, this),
-              !selectFile && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "6", onClick: () => setSelectFile(url), children: "Cortar arquivo" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 538,
-                columnNumber: 33
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "6", onClick: () => goDelete(), children: "Excluir arquivo" }, void 0, !1, {
-                fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 540,
-                columnNumber: 29
-              }, this)
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "4", onClick: () => setShowRenomear(!0), children: "Renomear arquivo" }),
+              !fileCopyAction && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "5", onClick: () => setFileCopyAction(url), children: "Copiar arquivo" }),
+              !selectFile && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "6", onClick: () => setSelectFile(url), children: "Cortar arquivo" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Dropdown.Item, { eventKey: "6", onClick: () => goDelete(), children: "Excluir arquivo" })
             ]
-          },
-          void 0,
-          !0,
-          {
-            fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 528,
-            columnNumber: 25
-          },
-          this
+          }
         )
-      ] }, void 0, !0, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 472,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("br", {}, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 544,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Row, { xs: 1, md: 4, className: "g-4", children: urlType !== "img" && filesData.filter((x) => !x.name.includes("undefined") && x.name !== ".initial").map((image) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Col, { children: image.id ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card.Img, { variant: "top", style: { width: "50vw", height: "38vh", objectFit: "cover" }, src: CDNURL + "/" + user + "/" + url + "/" + image.name, onClick: () => {
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("br", {}),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Row, { xs: 1, md: 4, className: "g-4", children: urlType !== "img" && filesData.filter((x) => !x.name.includes("undefined") && x.name !== ".initial").map((image) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Col, { children: image.id ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Card, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Card.Img, { variant: "top", style: { width: "50vw", height: "38vh", objectFit: "cover" }, src: CDNURL + "/" + user + "/" + url + "/" + image.name, onClick: () => {
         setUrlType("img"), setUrl(url + "/" + image.name);
-      } }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 578,
-        columnNumber: 29
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 577,
-        columnNumber: 25
-      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card, { style: { backgroundColor: "#19376D" }, onClick: () => {
+      } }) }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.Card, { style: { backgroundColor: "#19376D" }, onClick: () => {
         setUrlType("folder"), list_files(url, image.name);
-      }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card.Body, { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("img", { src: "/img/folder2.png", alt: "" }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 566,
-          columnNumber: 37
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup, { className: "mb-3 pl-2", style: { color: "white" }, children: image.name }, void 0, !1, {
-          fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 569,
-          columnNumber: 37
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 564,
-        columnNumber: 33
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 562,
-        columnNumber: 29
-      }, this) }, CDNURL + "/" + image.name, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 560,
-        columnNumber: 21
-      }, this)) }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 557,
-        columnNumber: 17
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: urlType == "img" && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "w-100 d-flex justify-content-center mt-2 mb-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("img", { src: CDNURL + "/" + user + "/" + url }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 620,
-        columnNumber: 29
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 619,
-        columnNumber: 25
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 597,
-        columnNumber: 21
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 595,
-        columnNumber: 17
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 471,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/imagemanager.tsx",
-    lineNumber: 363,
-    columnNumber: 9
-  }, this);
+      }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_react_bootstrap.Card.Body, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: "/img/folder2.png", alt: "" }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_react_bootstrap.InputGroup, { className: "mb-3 pl-2", style: { color: "white" }, children: image.name })
+      ] }) }) }, CDNURL + "/" + image.name)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { children: urlType == "img" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "w-100 d-flex justify-content-center mt-2 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: CDNURL + "/" + user + "/" + url }) }) }) })
+    ] })
+  ] });
 }
 
 // app/routes/notes._index.tsx
@@ -1337,21 +825,13 @@ var notes_index_exports = {};
 __export(notes_index_exports, {
   default: () => NoteIndexPage
 });
-var import_react10 = require("@remix-run/react"), import_jsx_dev_runtime7 = require("react/jsx-dev-runtime");
+var import_react10 = require("@remix-run/react"), import_jsx_runtime7 = require("react/jsx-runtime");
 function NoteIndexPage() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("p", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("p", { children: [
     "Selecione uma nota, ou",
     " ",
-    /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(import_react10.Link, { to: "new", className: "text-blue-500 underline", children: "crie uma nova." }, void 0, !1, {
-      fileName: "app/routes/notes._index.tsx",
-      lineNumber: 7,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/notes._index.tsx",
-    lineNumber: 5,
-    columnNumber: 5
-  }, this);
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_react10.Link, { to: "new", className: "text-blue-500 underline", children: "crie uma nova." })
+  ] });
 }
 
 // app/routes/healthcheck.tsx
@@ -1384,7 +864,7 @@ __export(folderNew_exports, {
 });
 var import_node7 = require("@remix-run/node"), import_react11 = require("@remix-run/react"), React3 = __toESM(require("react"));
 var import_supabase_js4 = require("@supabase/supabase-js");
-var import_jsx_dev_runtime8 = require("react/jsx-dev-runtime");
+var import_jsx_runtime8 = require("react/jsx-runtime");
 var supabase3 = (0, import_supabase_js4.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
 async function action3({ request }) {
   let userId = await requireUserId(request), folderName = (await request.formData()).get("folderName");
@@ -1408,7 +888,7 @@ function NewNotePage() {
     } catch {
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "p-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "p-10", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
     import_react11.Form,
     {
       name: "form1",
@@ -1420,19 +900,11 @@ function NewNotePage() {
         width: "100%"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("h2", { className: "text-gray-50", children: "Nova pasta" }, void 0, !1, {
-            fileName: "app/routes/folderNew.tsx",
-            lineNumber: 82,
-            columnNumber: 11
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { children: "Nome: " }, void 0, !1, {
-              fileName: "app/routes/folderNew.tsx",
-              lineNumber: 84,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "text-gray-50", children: "Nova pasta" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "Nome: " }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               "input",
               {
                 autoFocus: !0,
@@ -1440,69 +912,25 @@ function NewNotePage() {
                 id: "folderName",
                 name: "folderName",
                 className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6"
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/folderNew.tsx",
-                lineNumber: 85,
-                columnNumber: 13
-              },
-              this
+              }
             )
-          ] }, void 0, !0, {
-            fileName: "app/routes/folderNew.tsx",
-            lineNumber: 83,
-            columnNumber: 11
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/folderNew.tsx",
-          lineNumber: 81,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "text-left mt-3", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "text-left mt-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
             "button",
             {
               type: "submit",
               className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
               children: "Salvar"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/folderNew.tsx",
-              lineNumber: 96,
-              columnNumber: 11
-            },
-            this
+            }
           ),
           " ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(import_react11.Link, { to: "/notes", children: "Cencelar" }, void 0, !1, {
-            fileName: "app/routes/folderNew.tsx",
-            lineNumber: 102,
-            columnNumber: 11
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/folderNew.tsx",
-          lineNumber: 94,
-          columnNumber: 9
-        }, this)
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_react11.Link, { to: "/notes", children: "Cencelar" })
+        ] })
       ]
-    },
-    void 0,
-    !0,
-    {
-      fileName: "app/routes/folderNew.tsx",
-      lineNumber: 71,
-      columnNumber: 7
-    },
-    this
-  ) }, void 0, !1, {
-    fileName: "app/routes/folderNew.tsx",
-    lineNumber: 70,
-    columnNumber: 5
-  }, this);
+    }
+  ) });
 }
 
 // app/routes/notes.new.tsx
@@ -1515,7 +943,7 @@ __export(notes_new_exports, {
 });
 var import_node8 = require("@remix-run/node"), import_react12 = require("@remix-run/react"), React4 = __toESM(require("react")), import_react_router_dom2 = require("react-router-dom");
 var import_react13 = require("react"), import_supabase_js5 = require("@supabase/supabase-js");
-var import_jsx_dev_runtime9 = require("react/jsx-dev-runtime");
+var import_jsx_runtime9 = require("react/jsx-runtime");
 var supabase4 = (0, import_supabase_js5.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
 async function loader7({ request, params }) {
   let env = {
@@ -1561,7 +989,7 @@ function NewNotePage2() {
     } catch {
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
     import_react_router_dom2.Form,
     {
       name: "form1",
@@ -1573,9 +1001,9 @@ function NewNotePage2() {
         width: "100%"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { htmlFor: "title", className: "flex w-full flex-col gap-1  text-gray-50", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { htmlFor: "title", className: "flex w-full flex-col gap-1  text-gray-50", children: [
           "Titulo:",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
             "input",
             {
               autoFocus: !0,
@@ -1585,32 +1013,12 @@ function NewNotePage2() {
               className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
               "aria-invalid": (_a = actionData == null ? void 0 : actionData.errors) != null && _a.title ? !0 : void 0,
               "aria-errormessage": (_b = actionData == null ? void 0 : actionData.errors) != null && _b.title ? "title-error" : void 0
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.new.tsx",
-              lineNumber: 142,
-              columnNumber: 13
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 141,
-          columnNumber: 13
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 132,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("span", { children: "Texto: " }, void 0, !1, {
-            fileName: "app/routes/notes.new.tsx",
-            lineNumber: 157,
-            columnNumber: 13
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Texto: " }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
             "textarea",
             {
               ref: bodyRef,
@@ -1619,28 +1027,12 @@ function NewNotePage2() {
               className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
               "aria-invalid": (_c = actionData == null ? void 0 : actionData.errors) != null && _c.body ? !0 : void 0,
               "aria-errormessage": (_d = actionData == null ? void 0 : actionData.errors) != null && _d.body ? "body-error" : void 0
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.new.tsx",
-              lineNumber: 158,
-              columnNumber: 13
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 156,
-          columnNumber: 11
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 155,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { htmlFor: "tags", className: "flex w-full flex-col gap-1  text-gray-50", children: [
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { htmlFor: "tags", className: "flex w-full flex-col gap-1  text-gray-50", children: [
           "Marcadores:",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
             "input",
             {
               autoFocus: !0,
@@ -1650,91 +1042,31 @@ function NewNotePage2() {
               className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
               "aria-invalid": (_e = actionData == null ? void 0 : actionData.errors) != null && _e.title ? !0 : void 0,
               "aria-errormessage": (_f = actionData == null ? void 0 : actionData.errors) != null && _f.title ? "title-error" : void 0
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.new.tsx",
-              lineNumber: 173,
-              columnNumber: 13
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 172,
-          columnNumber: 9
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 171,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("span", { children: "Imagem: " }, void 0, !1, {
-            fileName: "app/routes/notes.new.tsx",
-            lineNumber: 188,
-            columnNumber: 11
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Imagem: " }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
             "input",
             {
               ref: imageRef,
               name: "image",
               className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.new.tsx",
-              lineNumber: 189,
-              columnNumber: 11
-            },
-            this
+            }
           )
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 187,
-          columnNumber: 9
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 186,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "text-left mt-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "text-left mt-3", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
           "button",
           {
             type: "submit",
             className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
             children: "Salvar"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/notes.new.tsx",
-            lineNumber: 205,
-            columnNumber: 11
-          },
-          this
-        ) }, void 0, !1, {
-          fileName: "app/routes/notes.new.tsx",
-          lineNumber: 204,
-          columnNumber: 9
-        }, this)
+          }
+        ) })
       ]
-    },
-    void 0,
-    !0,
-    {
-      fileName: "app/routes/notes.new.tsx",
-      lineNumber: 121,
-      columnNumber: 7
-    },
-    this
-  ) }, void 0, !1, {
-    fileName: "app/routes/notes.new.tsx",
-    lineNumber: 120,
-    columnNumber: 5
-  }, this);
+    }
+  ) });
 }
 
 // app/routes/projects.tsx
@@ -1762,7 +1094,7 @@ console.log(dataAtualFormatada2);
 
 // app/routes/projects.tsx
 var import_react15 = require("react");
-var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime");
+var import_jsx_runtime10 = require("react/jsx-runtime");
 async function loader8({ request, params }) {
   let userId = await requireUserId(request);
   console.log("userId:", userId);
@@ -1775,7 +1107,7 @@ async function action5({ request }) {
 }
 function Project() {
   let data2 = (0, import_react14.useLoaderData)(), [projects, setProjects] = (0, import_react15.useState)(data2), nameRef = React5.useRef(null);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "p-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "p-10", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
     import_react14.Form,
     {
       name: "form1",
@@ -1787,24 +1119,12 @@ function Project() {
         width: "100%"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { children: projects }, void 0, !1, {
-            fileName: "app/routes/projects.tsx",
-            lineNumber: 60,
-            columnNumber: 11
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("h2", { className: "text-gray-50", children: "Nova pasta" }, void 0, !1, {
-            fileName: "app/routes/projects.tsx",
-            lineNumber: 61,
-            columnNumber: 11
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("span", { children: "Nome: " }, void 0, !1, {
-              fileName: "app/routes/projects.tsx",
-              lineNumber: 63,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { children: projects }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h2", { className: "text-gray-50", children: "Nova pasta" }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "Nome: " }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
               "input",
               {
                 autoFocus: !0,
@@ -1812,69 +1132,25 @@ function Project() {
                 id: "name",
                 name: "name",
                 className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6"
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/projects.tsx",
-                lineNumber: 64,
-                columnNumber: 13
-              },
-              this
+              }
             )
-          ] }, void 0, !0, {
-            fileName: "app/routes/projects.tsx",
-            lineNumber: 62,
-            columnNumber: 11
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/projects.tsx",
-          lineNumber: 59,
-          columnNumber: 9
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "text-left mt-3", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "text-left mt-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
             "button",
             {
               type: "submit",
               className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
               children: "Salvar"
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/projects.tsx",
-              lineNumber: 75,
-              columnNumber: 11
-            },
-            this
+            }
           ),
           " ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(import_react14.Link, { to: "/notes", children: "Cencelar" }, void 0, !1, {
-            fileName: "app/routes/projects.tsx",
-            lineNumber: 81,
-            columnNumber: 11
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/projects.tsx",
-          lineNumber: 73,
-          columnNumber: 9
-        }, this)
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_react14.Link, { to: "/notes", children: "Cencelar" })
+        ] })
       ]
-    },
-    void 0,
-    !0,
-    {
-      fileName: "app/routes/projects.tsx",
-      lineNumber: 49,
-      columnNumber: 7
-    },
-    this
-  ) }, void 0, !1, {
-    fileName: "app/routes/projects.tsx",
-    lineNumber: 47,
-    columnNumber: 5
-  }, this);
+    }
+  ) });
 }
 
 // app/routes/showRes.tsx
@@ -1940,26 +1216,14 @@ function validateEmail(email) {
 }
 
 // app/routes/_index.tsx
-var import_jsx_dev_runtime11 = require("react/jsx-dev-runtime"), meta = () => [{ title: "Remix Notes" }];
+var import_jsx_runtime11 = require("react/jsx-runtime"), meta = () => [{ title: "Remix Notes" }];
 function Index() {
   let user = useOptionalUser();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("main", { className: "bg-dark relative min-h-screen sm:flex sm:items-center sm:justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "relative sm:pb-16 sm:pt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "mx-auto max-w-7xl sm:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "relative shadow-xl sm:overflow-hidden sm:rounded-2xl", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "absolute inset-0" }, void 0, !1, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 15,
-      columnNumber: 13
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "relative px-4 pb-8 pt-5 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-15", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("h3", { className: "text-center text-4xl font-extrabold tracking-tight sm:text-4xl lg:text-4xl", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("span", { className: "block uppercase text-yellow-500 drop-shadow-md", children: "MW Notes2" }, void 0, !1, {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 25,
-        columnNumber: 17
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 24,
-        columnNumber: 15
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center", children: user ? /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("main", { className: "bg-dark relative min-h-screen sm:flex sm:items-center sm:justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "relative sm:pb-16 sm:pt-8", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "mx-auto max-w-7xl sm:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "relative shadow-xl sm:overflow-hidden sm:rounded-2xl", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "absolute inset-0" }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "relative px-4 pb-8 pt-5 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-15", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { className: "text-center text-4xl font-extrabold tracking-tight sm:text-4xl lg:text-4xl", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "block uppercase text-yellow-500 drop-shadow-md", children: "MW Notes2" }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center", children: user ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
         import_react18.Link,
         {
           to: "/notes",
@@ -1968,79 +1232,27 @@ function Index() {
             "Notas de ",
             user.email
           ]
-        },
-        void 0,
-        !0,
-        {
-          fileName: "app/routes/_index.tsx",
-          lineNumber: 35,
-          columnNumber: 19
-        },
-        this
-      ) : /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
+        }
+      ) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
           import_react18.Link,
           {
             to: "/join",
             className: "flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8",
             children: "Inscrever"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/_index.tsx",
-            lineNumber: 43,
-            columnNumber: 21
-          },
-          this
+          }
         ),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
           import_react18.Link,
           {
             to: "/login",
             className: "flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600",
             children: "Entrar"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/_index.tsx",
-            lineNumber: 49,
-            columnNumber: 21
-          },
-          this
+          }
         )
-      ] }, void 0, !0, {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 42,
-        columnNumber: 19
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 33,
-        columnNumber: 15
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 23,
-      columnNumber: 13
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 14,
-    columnNumber: 11
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 13,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 12,
-    columnNumber: 7
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 11,
-    columnNumber: 5
-  }, this);
+      ] }) })
+    ] })
+  ] }) }) }) });
 }
 
 // app/routes/login2.tsx
@@ -2082,38 +1294,22 @@ __export(upload_exports, {
   default: () => Page,
   supabase: () => supabase5
 });
-var import_react19 = require("react"), import_supabase_js7 = require("@supabase/supabase-js"), import_uuid3 = require("uuid"), import_jsx_dev_runtime12 = require("react/jsx-dev-runtime"), supabase5 = (0, import_supabase_js7.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
+var import_react19 = require("react"), import_supabase_js7 = require("@supabase/supabase-js"), import_uuid3 = require("uuid"), import_jsx_runtime12 = require("react/jsx-runtime"), supabase5 = (0, import_supabase_js7.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
 function Page() {
   let [file, setfile] = (0, import_react19.useState)([]);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("form", { onSubmit: async (e) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: async (e) => {
     e.preventDefault();
     let filename = `${(0, import_uuid3.v4)()}-${file.name}`, { data: data2, error } = await supabase5.storage.from("files").upload(filename, file, {
       cacheControl: "3600",
       upsert: !1
     }), filepath = data2.path;
   }, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("input", { type: "file", name: "image", onChange: (e) => {
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { type: "file", name: "image", onChange: (e) => {
       setfile(e.target.files[0]);
-    } }, void 0, !1, {
-      fileName: "app/routes/upload.tsx",
-      lineNumber: 30,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("br", {}, void 0, !1, {
-      fileName: "app/routes/upload.tsx",
-      lineNumber: 31,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("button", { type: "submit", children: "Upload image" }, void 0, !1, {
-      fileName: "app/routes/upload.tsx",
-      lineNumber: 32,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/upload.tsx",
-    lineNumber: 29,
-    columnNumber: 5
-  }, this);
+    } }),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("br", {}),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", children: "Upload image" })
+  ] });
 }
 
 // app/routes/login.tsx
@@ -2125,7 +1321,7 @@ __export(login_exports, {
   meta: () => meta2
 });
 var import_node13 = require("@remix-run/node"), import_react20 = require("@remix-run/react"), React6 = __toESM(require("react"));
-var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime");
+var import_jsx_runtime13 = require("react/jsx-runtime");
 async function loader12({ request }) {
   let userId = await getUserId(request);
   return console.log("-->userId:", userId), (0, import_node13.json)({});
@@ -2160,35 +1356,19 @@ function LoginPage() {
   return React6.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email ? (_b2 = emailRef.current) == null || _b2.focus() : (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.password && ((_d2 = passwordRef.current) == null || _d2.focus());
-  }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex mt-20 min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "mx-auto w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_react20.Form, { method: "post", className: "space-y-6", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h3", { children: "Entrar" }, void 0, !1, {
-      fileName: "app/routes/login.tsx",
-      lineNumber: 84,
-      columnNumber: 66
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/login.tsx",
-      lineNumber: 84,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+  }, [actionData]), /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "flex mt-20 min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "mx-auto w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_react20.Form, { method: "post", className: "space-y-6", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h3", { children: "Entrar" }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         "label",
         {
           htmlFor: "email",
           className: "block text-sm font-medium text-white",
           children: "Email"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/login.tsx",
-          lineNumber: 86,
-          columnNumber: 13
-        },
-        this
+        }
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "input",
           {
             ref: emailRef,
@@ -2201,50 +1381,22 @@ function LoginPage() {
             "aria-invalid": (_a = actionData == null ? void 0 : actionData.errors) != null && _a.email ? !0 : void 0,
             "aria-describedby": "email-error",
             className: "w-full rounded border border-gray-500 px-2 py-1 text-lg"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/login.tsx",
-            lineNumber: 93,
-            columnNumber: 15
-          },
-          this
+          }
         ),
-        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email }, void 0, !1, {
-          fileName: "app/routes/login.tsx",
-          lineNumber: 106,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/login.tsx",
-        lineNumber: 92,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/login.tsx",
-      lineNumber: 85,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         "label",
         {
           htmlFor: "password",
           className: "block text-sm font-medium text-white",
           children: "Senha"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/login.tsx",
-          lineNumber: 114,
-          columnNumber: 13
-        },
-        this
+        }
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "input",
           {
             id: "password",
@@ -2255,96 +1407,44 @@ function LoginPage() {
             "aria-invalid": (_c = actionData == null ? void 0 : actionData.errors) != null && _c.password ? !0 : void 0,
             "aria-describedby": "password-error",
             className: "w-full rounded border border-gray-500 px-2 py-1 text-lg"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/login.tsx",
-            lineNumber: 121,
-            columnNumber: 15
-          },
-          this
+          }
         ),
-        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password }, void 0, !1, {
-          fileName: "app/routes/login.tsx",
-          lineNumber: 132,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/login.tsx",
-        lineNumber: 120,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/login.tsx",
-      lineNumber: 113,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: redirectTo }, void 0, !1, {
-      fileName: "app/routes/login.tsx",
-      lineNumber: 139,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { type: "hidden", name: "redirectTo", value: redirectTo }),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "button",
       {
         type: "submit",
         className: "w-full rounded bg-blue-500  px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
         children: "Entrar"
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/login.tsx",
-        lineNumber: 140,
-        columnNumber: 11
-      },
-      this
+      }
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex items-center justify-between", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex items-center", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center justify-between", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "input",
           {
             id: "remember",
             name: "remember",
             type: "checkbox",
             className: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/login.tsx",
-            lineNumber: 148,
-            columnNumber: 15
-          },
-          this
+          }
         ),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "label",
           {
             htmlFor: "remember",
             className: "ml-2 block text-sm text-gray-100",
             children: "Lembrar"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/login.tsx",
-            lineNumber: 154,
-            columnNumber: 15
-          },
-          this
+          }
         )
-      ] }, void 0, !0, {
-        fileName: "app/routes/login.tsx",
-        lineNumber: 147,
-        columnNumber: 13
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "text-center text-sm text-gray-500", children: [
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "text-center text-sm text-gray-500", children: [
         "Ainda n\xE3o tem conta?",
         " ",
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           import_react20.Link,
           {
             className: "text-blue-500 underline",
@@ -2353,39 +1453,11 @@ function LoginPage() {
               search: searchParams.toString()
             },
             children: "Registrar"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/login.tsx",
-            lineNumber: 163,
-            columnNumber: 15
-          },
-          this
+          }
         )
-      ] }, void 0, !0, {
-        fileName: "app/routes/login.tsx",
-        lineNumber: 161,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/login.tsx",
-      lineNumber: 146,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/login.tsx",
-    lineNumber: 83,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/login.tsx",
-    lineNumber: 82,
-    columnNumber: 7
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/login.tsx",
-    lineNumber: 81,
-    columnNumber: 5
-  }, this);
+      ] })
+    ] })
+  ] }) }) });
 }
 
 // app/routes/notes.tsx
@@ -2395,7 +1467,7 @@ __export(notes_exports, {
   loader: () => loader13
 });
 var import_node14 = require("@remix-run/node"), import_react21 = require("@remix-run/react");
-var import_react_router_dom3 = require("react-router-dom"), import_react22 = require("react"), import_react_arborist = require("react-arborist"), import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
+var import_react_router_dom3 = require("react-router-dom"), import_react22 = require("react"), import_react_arborist = require("react-arborist"), import_jsx_runtime14 = require("react/jsx-runtime");
 async function loader13({ request }) {
   let userId = await requireUserId(request), noteListItems = await getNoteListItems({ userId });
   return console.log(4, noteListItems), (0, import_node14.json)(noteListItems);
@@ -2405,18 +1477,10 @@ function NotesPage() {
   console.log("data:", data2);
   let user = useUser(), [showSideBar, setShowSideBar] = (0, import_react22.useState)(!0), [dataTree, setDataTree] = (0, import_react22.useState)(data2);
   function Node({ node, style, dragHandle }) {
-    return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { style, ref: dragHandle, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style, ref: dragHandle, children: [
       node.isLeaf ? "" : "\u{1F5C0}",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("a", { className: "no-underline", href: "/notes/" + node.data.id, children: node.data.title }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 35,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/notes.tsx",
-      lineNumber: 33,
-      columnNumber: 7
-    }, this);
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("a", { className: "no-underline", href: "/notes/" + node.data.id, children: node.data.title })
+    ] });
   }
   let data22 = [
     { id: "1", name: "Unread", link: "/notes" },
@@ -2450,101 +1514,37 @@ function NotesPage() {
   let handleToggleSideBar = () => {
     setShowSideBar(!showSideBar);
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex h-full min-h-screen flex-col", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("header", { className: "flex pt-6 items-center justify-between bg-slate-800 p-2 text-white no-underline", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("button", { onClick: () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex h-full min-h-screen flex-col", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("header", { className: "flex pt-6 items-center justify-between bg-slate-800 p-2 text-white no-underline", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { onClick: () => {
         handleToggleSideBar();
-      }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("svg", { className: "w-6 h-6", "aria-hidden": "true", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { clipRule: "evenodd", fillRule: "evenodd", d: "M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 89,
-        columnNumber: 13
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 88,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 87,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("h5", { className: "text-1xl font-sans	pt-1 pl-2", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Link, { to: ".", className: "no-underline text-yellow-500", children: "MW Notes" }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 93,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 92,
-        columnNumber: 9
-      }, this),
+      }, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("svg", { className: "w-6 h-6", "aria-hidden": "true", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { clipRule: "evenodd", fillRule: "evenodd", d: "M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" }) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h5", { className: "text-1xl font-sans	pt-1 pl-2", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_react21.Link, { to: ".", className: "no-underline text-yellow-500", children: "MW Notes" }) }),
       user.id,
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Form, { action: "/logout", method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_react21.Form, { action: "/logout", method: "post", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
         "button",
         {
           type: "submit",
           className: "rounded bg-slate-600 px-4 py-1 text-blue-100 hover:bg-blue-500 active:bg-blue-600 text-xs",
           children: user.email
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 98,
-          columnNumber: 11
-        },
-        this
-      ) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 97,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/notes.tsx",
-      lineNumber: 85,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("main", { className: "flex h-full", children: [
-      showSideBar && /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("aside", { className: " pl-5 w-[150px] py-3 ", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("a", { href: "/notes/new", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("svg", { className: "h-6 w-6 text-gray-400", width: "24", height: "24", viewBox: "0 0 24 24", strokeWidth: "2", stroke: "currentColor", fill: "none", strokeLinecap: "round", strokeLinejoin: "round", children: [
+        }
+      ) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("main", { className: "flex h-full", children: [
+      showSideBar && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("aside", { className: " pl-5 w-[150px] py-3 ", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("a", { href: "/notes/new", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("svg", { className: "h-6 w-6 text-gray-400", width: "24", height: "24", viewBox: "0 0 24 24", strokeWidth: "2", stroke: "currentColor", fill: "none", strokeLinecap: "round", strokeLinejoin: "round", children: [
           "  ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { stroke: "none", d: "M0 0h24v24H0z" }, void 0, !1, {
-            fileName: "app/routes/notes.tsx",
-            lineNumber: 117,
-            columnNumber: 212
-          }, this),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { stroke: "none", d: "M0 0h24v24H0z" }),
           "  ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { d: "M14 3v4a1 1 0 0 0 1 1h4" }, void 0, !1, {
-            fileName: "app/routes/notes.tsx",
-            lineNumber: 117,
-            columnNumber: 253
-          }, this),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { d: "M14 3v4a1 1 0 0 0 1 1h4" }),
           "  ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { d: "M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" }, void 0, !1, {
-            fileName: "app/routes/notes.tsx",
-            lineNumber: 117,
-            columnNumber: 291
-          }, this),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { d: "M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" }),
           "  ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("line", { x1: "12", y1: "11", x2: "12", y2: "17" }, void 0, !1, {
-            fileName: "app/routes/notes.tsx",
-            lineNumber: 117,
-            columnNumber: 376
-          }, this),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("line", { x1: "12", y1: "11", x2: "12", y2: "17" }),
           "  ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("line", { x1: "9", y1: "14", x2: "15", y2: "14" }, void 0, !1, {
-            fileName: "app/routes/notes.tsx",
-            lineNumber: 117,
-            columnNumber: 418
-          }, this)
-        ] }, void 0, !0, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 117,
-          columnNumber: 32
-        }, this) }, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 117,
-          columnNumber: 11
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("line", { x1: "9", y1: "14", x2: "15", y2: "14" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
           import_react_arborist.Tree,
           {
             initialData: dataTree,
@@ -2558,45 +1558,13 @@ function NotesPage() {
             paddingBottom: 5,
             padding: 10,
             children: Node
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/notes.tsx",
-            lineNumber: 118,
-            columnNumber: 11
-          },
-          this
+          }
         )
-      ] }, void 0, !0, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 116,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 115,
-        columnNumber: 7
-      }, this),
+      ] }) }),
       !1,
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex-1 p-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Outlet, {}, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 188,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 187,
-        columnNumber: 9
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/notes.tsx",
-      lineNumber: 112,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/notes.tsx",
-    lineNumber: 84,
-    columnNumber: 5
-  }, this);
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "flex-1 p-6", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_react21.Outlet, {}) })
+    ] })
+  ] });
 }
 
 // app/routes/join.tsx
@@ -2608,7 +1576,7 @@ __export(join_exports, {
   meta: () => meta3
 });
 var import_node15 = require("@remix-run/node"), import_react23 = require("@remix-run/react"), React7 = __toESM(require("react"));
-var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime");
+var import_jsx_runtime15 = require("react/jsx-runtime");
 async function loader14({ request }) {
   let userId = await getUserId(request);
   return (0, import_node15.json)({});
@@ -2655,35 +1623,19 @@ function Join() {
   return React7.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email ? (_b2 = emailRef.current) == null || _b2.focus() : (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.password && ((_d2 = passwordRef.current) == null || _d2.focus());
-  }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "flex min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "mx-auto pt-20 w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_react23.Form, { method: "post", className: "space-y-6", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("h3", { children: "Registrar" }, void 0, !1, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 91,
-      columnNumber: 66
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 91,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+  }, [actionData]), /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "mx-auto pt-20 w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_react23.Form, { method: "post", className: "space-y-6", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { children: "Registrar" }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
         "label",
         {
           htmlFor: "email",
           className: "block text-sm font-medium text-white",
           children: "Email"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/join.tsx",
-          lineNumber: 93,
-          columnNumber: 13
-        },
-        this
+        }
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
           "input",
           {
             ref: emailRef,
@@ -2696,50 +1648,22 @@ function Join() {
             "aria-invalid": (_a = actionData == null ? void 0 : actionData.errors) != null && _a.email ? !0 : void 0,
             "aria-describedby": "email-error",
             className: "w-full rounded border border-gray-500 px-2 py-1 text-lg"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/join.tsx",
-            lineNumber: 100,
-            columnNumber: 15
-          },
-          this
+          }
         ),
-        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email }, void 0, !1, {
-          fileName: "app/routes/join.tsx",
-          lineNumber: 113,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/join.tsx",
-        lineNumber: 99,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 92,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
         "label",
         {
           htmlFor: "password",
           className: "block text-sm font-medium text-white",
           children: "Senha"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/join.tsx",
-          lineNumber: 121,
-          columnNumber: 13
-        },
-        this
+        }
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
           "input",
           {
             id: "password",
@@ -2750,56 +1674,24 @@ function Join() {
             "aria-invalid": (_c = actionData == null ? void 0 : actionData.errors) != null && _c.password ? !0 : void 0,
             "aria-describedby": "password-error",
             className: "w-full rounded border border-gray-500 px-2 py-1 text-lg"
-          },
-          void 0,
-          !1,
-          {
-            fileName: "app/routes/join.tsx",
-            lineNumber: 128,
-            columnNumber: 15
-          },
-          this
+          }
         ),
-        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password }, void 0, !1, {
-          fileName: "app/routes/join.tsx",
-          lineNumber: 139,
-          columnNumber: 17
-        }, this)
-      ] }, void 0, !0, {
-        fileName: "app/routes/join.tsx",
-        lineNumber: 127,
-        columnNumber: 13
-      }, this)
-    ] }, void 0, !0, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 120,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: redirectTo }, void 0, !1, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 146,
-      columnNumber: 11
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "hidden", name: "redirectTo", value: redirectTo }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
       "button",
       {
         type: "submit",
         className: "w-full rounded bg-blue-500  px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
         children: "Registrar"
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/join.tsx",
-        lineNumber: 147,
-        columnNumber: 11
-      },
-      this
+      }
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "text-center text-sm text-gray-500", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "text-center text-sm text-gray-500", children: [
       "J\xE1 tem uma conta?",
       " ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
         import_react23.Link,
         {
           className: "text-blue-500 underline",
@@ -2808,42 +1700,14 @@ function Join() {
             search: searchParams.toString()
           },
           children: "Entrar"
-        },
-        void 0,
-        !1,
-        {
-          fileName: "app/routes/join.tsx",
-          lineNumber: 156,
-          columnNumber: 15
-        },
-        this
+        }
       )
-    ] }, void 0, !0, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 154,
-      columnNumber: 13
-    }, this) }, void 0, !1, {
-      fileName: "app/routes/join.tsx",
-      lineNumber: 153,
-      columnNumber: 11
-    }, this)
-  ] }, void 0, !0, {
-    fileName: "app/routes/join.tsx",
-    lineNumber: 90,
-    columnNumber: 9
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/join.tsx",
-    lineNumber: 89,
-    columnNumber: 7
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/join.tsx",
-    lineNumber: 88,
-    columnNumber: 5
-  }, this);
+    ] }) })
+  ] }) }) });
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "c5fb94d0", entry: { module: "/build/entry.client-BCJNULHS.js", imports: ["/build/_shared/chunk-56KUAJVK.js", "/build/_shared/chunk-OWPABCHM.js", "/build/_shared/chunk-3QIN6FEG.js", "/build/_shared/chunk-DF3EUDCN.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-MODFOBSP.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-Y2LYZVNS.js", imports: ["/build/_shared/chunk-QCJELAVJ.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api.$userid.note.$noteid.show": { id: "routes/api.$userid.note.$noteid.show", parentId: "root", path: "api/:userid/note/:noteid/show", index: void 0, caseSensitive: void 0, module: "/build/routes/api.$userid.note.$noteid.show-VT662FPS.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/folderNew": { id: "routes/folderNew", parentId: "root", path: "folderNew", index: void 0, caseSensitive: void 0, module: "/build/routes/folderNew-GW63X2W6.js", imports: ["/build/_shared/chunk-BOCVWV7G.js", "/build/_shared/chunk-UUXYXIFE.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-A5E2ZC62.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/imagemanager": { id: "routes/imagemanager", parentId: "root", path: "imagemanager", index: void 0, caseSensitive: void 0, module: "/build/routes/imagemanager-NXKOSJUZ.js", imports: ["/build/_shared/chunk-BPFDCX7X.js", "/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-J3BFVYP5.js", imports: ["/build/_shared/chunk-MMIEBQCH.js", "/build/_shared/chunk-QCJELAVJ.js", "/build/_shared/chunk-UUXYXIFE.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-KOTQKVRQ.js", imports: ["/build/_shared/chunk-MMIEBQCH.js", "/build/_shared/chunk-QCJELAVJ.js", "/build/_shared/chunk-UUXYXIFE.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login2": { id: "routes/login2", parentId: "root", path: "login2", index: void 0, caseSensitive: void 0, module: "/build/routes/login2-WNLYJV2F.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-CG5UQZAS.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-BHLD2M34.js", imports: ["/build/_shared/chunk-QCJELAVJ.js", "/build/_shared/chunk-BOCVWV7G.js", "/build/_shared/chunk-UUXYXIFE.js", "/build/_shared/chunk-BPFDCX7X.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.$noteId": { id: "routes/notes.$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.$noteId-EUPXCMFH.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/notes._index": { id: "routes/notes._index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes._index-V4QCG5MN.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.edit.$noteId": { id: "routes/notes.edit.$noteId", parentId: "routes/notes", path: "edit/:noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.edit.$noteId-4GEH2YRQ.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.new": { id: "routes/notes.new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.new-ELU2B3MI.js", imports: ["/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-IYC5EABB.js", imports: ["/build/_shared/chunk-UUXYXIFE.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/showRes": { id: "routes/showRes", parentId: "root", path: "showRes", index: void 0, caseSensitive: void 0, module: "/build/routes/showRes-LDO4O2MS.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/upload": { id: "routes/upload", parentId: "root", path: "upload", index: void 0, caseSensitive: void 0, module: "/build/routes/upload-JMLNS53R.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, hmr: void 0, url: "/build/manifest-C5FB94D0.js" };
+var assets_manifest_default = { version: "d25ebd3c", entry: { module: "/build/entry.client-MRYRRJCT.js", imports: ["/build/_shared/chunk-U5ESLDBE.js", "/build/_shared/chunk-N25U7VOR.js", "/build/_shared/chunk-PQZYEQJJ.js", "/build/_shared/chunk-T36URGAI.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-RXZ2ZGDQ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-3U3Q2VEA.js", imports: ["/build/_shared/chunk-L27AEQYI.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api.$userid.note.$noteid.show": { id: "routes/api.$userid.note.$noteid.show", parentId: "root", path: "api/:userid/note/:noteid/show", index: void 0, caseSensitive: void 0, module: "/build/routes/api.$userid.note.$noteid.show-EFCKSQVP.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/folderNew": { id: "routes/folderNew", parentId: "root", path: "folderNew", index: void 0, caseSensitive: void 0, module: "/build/routes/folderNew-ODGLR54P.js", imports: ["/build/_shared/chunk-KZNWDO46.js", "/build/_shared/chunk-DYV54FQG.js", "/build/_shared/chunk-LUNZM2Y3.js", "/build/_shared/chunk-RC6NYAFI.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-E6SA7XVY.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/imagemanager": { id: "routes/imagemanager", parentId: "root", path: "imagemanager", index: void 0, caseSensitive: void 0, module: "/build/routes/imagemanager-I5L6QNPK.js", imports: ["/build/_shared/chunk-OMMTXYQB.js", "/build/_shared/chunk-HITQAIKO.js", "/build/_shared/chunk-LUNZM2Y3.js", "/build/_shared/chunk-RC6NYAFI.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-EEYRHECX.js", imports: ["/build/_shared/chunk-IRYEX53N.js", "/build/_shared/chunk-L27AEQYI.js", "/build/_shared/chunk-DYV54FQG.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-4AIQPFLM.js", imports: ["/build/_shared/chunk-IRYEX53N.js", "/build/_shared/chunk-L27AEQYI.js", "/build/_shared/chunk-DYV54FQG.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login2": { id: "routes/login2", parentId: "root", path: "login2", index: void 0, caseSensitive: void 0, module: "/build/routes/login2-QOYBCN4W.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-HOPHOQJQ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-RMZBZ5CT.js", imports: ["/build/_shared/chunk-L27AEQYI.js", "/build/_shared/chunk-KZNWDO46.js", "/build/_shared/chunk-DYV54FQG.js", "/build/_shared/chunk-OMMTXYQB.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.$noteId": { id: "routes/notes.$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.$noteId-3XDRJFYG.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/notes._index": { id: "routes/notes._index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes._index-U3QX5HOX.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.edit.$noteId": { id: "routes/notes.edit.$noteId", parentId: "routes/notes", path: "edit/:noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.edit.$noteId-QW25SMCE.js", imports: ["/build/_shared/chunk-HITQAIKO.js", "/build/_shared/chunk-LUNZM2Y3.js", "/build/_shared/chunk-RC6NYAFI.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.new": { id: "routes/notes.new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.new-3IDMRXD7.js", imports: ["/build/_shared/chunk-LUNZM2Y3.js", "/build/_shared/chunk-RC6NYAFI.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-5ORFNVJ4.js", imports: ["/build/_shared/chunk-DYV54FQG.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/showRes": { id: "routes/showRes", parentId: "root", path: "showRes", index: void 0, caseSensitive: void 0, module: "/build/routes/showRes-FJJNGAKO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/upload": { id: "routes/upload", parentId: "root", path: "upload", index: void 0, caseSensitive: void 0, module: "/build/routes/upload-UGSJVCY4.js", imports: ["/build/_shared/chunk-HITQAIKO.js", "/build/_shared/chunk-LUNZM2Y3.js", "/build/_shared/chunk-RC6NYAFI.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, hmr: void 0, url: "/build/manifest-D25EBD3C.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { unstable_cssModules: !1, unstable_cssSideEffectImports: !1, unstable_dev: !1, unstable_postcss: !1, unstable_tailwind: !0, unstable_vanillaExtract: !1, v2_errorBoundary: !0, v2_meta: !0, v2_normalizeFormMethod: !0, v2_routeConvention: !0 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -3001,4 +1865,3 @@ var assetsBuildDirectory = "public/build", future = { unstable_cssModules: !1, u
   publicPath,
   routes
 });
-//# sourceMappingURL=index.js.map
