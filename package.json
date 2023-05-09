@@ -42,6 +42,7 @@
     "bootstrap": "^5.3.0-alpha3",
     "isbot": "^3.6.7",
     "react": "^18.2.0",
+    "react-arborist": "^3.0.2",
     "react-bootstrap": "^2.7.2",
     "react-bootstrap-icons": "^1.10.3",
     "react-dom": "^18.2.0",

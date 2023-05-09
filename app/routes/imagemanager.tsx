@@ -16,7 +16,6 @@ import { RiFolderUploadLine } from "react-icons/ri";
 import { createServerClient } from '@supabase/auth-helpers-remix'
 // import type { LoaderArgs } from '@remix-run/node' // change this import to whatever runtime you are using
 
-const CDNURL = "https://jrppesgzrtbbqriuypku.supabase.co/storage/v1/object/public/files/";
 // const supabase = createClient('https://jrppesgzrtbbqriuypku.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpycHBlc2d6cnRiYnFyaXV5cGt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIwMjYwMDksImV4cCI6MTk5NzYwMjAwOX0.mVBmQ2FuHX5r4vfrsllMAVZJrrIb3Bx-HjJWyz3HNCo', {
 //     db: {
 //       schema: 'custom',
@@ -57,6 +56,8 @@ const CDNURL = "https://jrppesgzrtbbqriuypku.supabase.co/storage/v1/object/publi
 
 export const loader = async ({request}: LoaderArgs) => {
     const userId = await getUserId(request);
+    const CDNURL = process.env.SUPABASE_URL_RAW;
+   
     const env = {
       SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW!,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
@@ -65,7 +66,7 @@ export const loader = async ({request}: LoaderArgs) => {
     if (!userId) {
         return redirect("/login");
       }else{
-        return json({ userId, env })
+        return json({ userId, env, CDNURL })
       }
   
     
@@ -98,7 +99,7 @@ export default function imagemanager() {
 
     const bucket = 'files'
 
-
+    const CDNURL = data.env.SUPABASE_URL_RAW + '/storage/v1/object/public/files'
     const supabase = createClient(data.env.SUPABASE_URL_RAW, data.env.SUPABASE_ANON_KEY, {
         db: {
             schema: 'custom',

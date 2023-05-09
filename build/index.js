@@ -139,7 +139,7 @@ __export(root_exports, {
 var import_node3 = require("@remix-run/node"), import_react2 = require("@remix-run/react");
 
 // app/styles/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-WNWHJTFD.css";
+var tailwind_default = "/build/_assets/tailwind-4CLOJHFZ.css";
 
 // app/session.server.ts
 var import_node2 = require("@remix-run/node"), import_tiny_invariant = __toESM(require("tiny-invariant"));
@@ -152,7 +152,7 @@ var import_client = require("@prisma/client"), prisma;
 global.__db__ || (global.__db__ = new import_client.PrismaClient()), prisma = global.__db__, prisma.$connect();
 
 // app/models/user.server.ts
-var import_supabase_js = require("@supabase/supabase-js"), supabaseUrl = "https://jrppesgzrtbbqriuypku.supabase.co", supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpycHBlc2d6cnRiYnFyaXV5cGt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIwMjYwMDksImV4cCI6MTk5NzYwMjAwOX0.mVBmQ2FuHX5r4vfrsllMAVZJrrIb3Bx-HjJWyz3HNCo", supabase = (0, import_supabase_js.createClient)(supabaseUrl, supabaseKey, {
+var import_supabase_js = require("@supabase/supabase-js"), supabaseUrl = process.env.SUPABASE_URL_RAW, supabaseKey = process.env.SUPABASE_ANON_KEY, supabase = (0, import_supabase_js.createClient)(supabaseUrl, supabaseKey, {
   auth: {
     autoRefreshToken: !1,
     persistSession: !1
@@ -336,12 +336,27 @@ function App() {
   }, this);
 }
 
+// app/routes/api.$userid.note.$noteid.show.tsx
+var api_userid_note_noteid_show_exports = {};
+__export(api_userid_note_noteid_show_exports, {
+  loader: () => loader2
+});
+var import_client2 = require("@prisma/client"), import_server_runtime = require("@remix-run/server-runtime"), prisma2 = new import_client2.PrismaClient(), loader2 = async ({ request, params }) => {
+  if (console.log("field:", params.id), params.noteid == "all") {
+    let notes = await prisma2.note.findMany({ where: { userId: params.userid } });
+    return console.log("notes:", notes), console.log("Loading..."), await prisma2.$disconnect(), (0, import_server_runtime.json)(notes, 200);
+  } else {
+    let notes = await prisma2.note.findMany({ where: { userId: params.userid, id: params.noteid } });
+    return console.log("notes:", notes), console.log("Loading..."), await prisma2.$disconnect(), (0, import_server_runtime.json)(notes, 200);
+  }
+};
+
 // app/routes/notes.edit.$noteId.tsx
 var notes_edit_noteId_exports = {};
 __export(notes_edit_noteId_exports, {
   action: () => action,
   default: () => EditNotePage,
-  loader: () => loader2,
+  loader: () => loader3,
   supabase: () => supabase2
 });
 var import_node4 = require("@remix-run/node"), import_react3 = require("@remix-run/react"), React = __toESM(require("react")), import_react_router_dom = require("react-router-dom");
@@ -353,22 +368,15 @@ function getNote({
   userId
 }) {
   return prisma.note.findFirst({
-    select: { id: !0, body: !0, img: !0, title: !0 },
+    select: { id: !0, body: !0, img: !0, title: !0, tags: !0 },
     where: { id, userId }
   });
-}
-async function getFolderListItems({ userId }) {
-  return console.log("userId", userId), await prisma.folder.findMany({
-    where: { userId },
-    select: { id: !0, name: !0 },
-    orderBy: { updatedAt: "desc" }
-  }) || [];
 }
 async function getNoteListItems({ userId }) {
   return console.log("userId", userId), await prisma.note.findMany({
     where: { userId },
-    select: { id: !0, title: !0, folder: !0, folderId: !0 },
-    orderBy: [{ folderId: "asc" }, { updatedAt: "desc" }]
+    select: { id: !0, title: !0 },
+    orderBy: [{ updatedAt: "desc" }]
   });
 }
 function updateNote(obj) {
@@ -397,21 +405,17 @@ function folderCreate({ folderName, userId }) {
   });
 }
 function createNote({
-  folder,
   body,
   title,
+  tags,
   img,
   userId
 }) {
   return prisma.note.create({
     data: {
-      folder: {
-        connect: {
-          id: folder
-        }
-      },
       title,
       body,
+      tags,
       img,
       user: {
         connect: {
@@ -432,14 +436,14 @@ function deleteNote({
 
 // app/routes/notes.edit.$noteId.tsx
 var import_react4 = require("react"), import_supabase_js2 = require("@supabase/supabase-js"), import_uuid = require("uuid"), import_jsx_dev_runtime3 = require("react/jsx-dev-runtime"), supabase2 = (0, import_supabase_js2.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
-async function loader2({ request, params }) {
+async function loader3({ request, params }) {
   let userId = await requireUserId(request), note = await getNote({ userId, id: params.noteId }) || {};
   if (console.log(11, note), !note)
     throw new Response("Not Found", { status: 404 });
   return (0, import_node4.json)({ note });
 }
 async function action({ request }) {
-  let userId = await requireUserId(request), formData = await request.formData(), id = formData.get("id"), title = formData.get("title"), body = formData.get("body"), image = formData.get("image"), noimage = formData.get("noimage");
+  let userId = await requireUserId(request), formData = await request.formData(), id = formData.get("id"), title = formData.get("title"), tags = formData.get("tags"), body = formData.get("body"), image = formData.get("image"), noimage = formData.get("noimage");
   if (console.log(title, body, image, noimage), typeof title != "string" || title.length === 0)
     return (0, import_node4.json)(
       { errors: { title: "Title is required", body: null } },
@@ -450,14 +454,14 @@ async function action({ request }) {
       { errors: { title: null, body: "Body is required" } },
       { status: 400 }
     );
-  let obj = { id, title, body, userId };
+  let obj = { id, title, body, tags, userId };
   obj.img = image, console.log(2, noimage), noimage == "true" && (obj.img = "");
   let note = await updateNote(obj);
   return (0, import_node4.redirect)(`/notes/${note.id}`);
 }
 function EditNotePage() {
   var _a, _b, _c, _d, _e, _f;
-  let data2 = (0, import_react3.useLoaderData)(), actionData = (0, import_react3.useActionData)(), idRef = React.useRef(null), titleRef = React.useRef(null), bodyRef = React.useRef(null), imageRef = React.useRef(null), noimageRef = React.useRef("false"), [file, setfile] = (0, import_react4.useState)([]), [db_fileName, db_setFileName] = (0, import_react4.useState)([]), submit = (0, import_react_router_dom.useSubmit)();
+  let data2 = (0, import_react3.useLoaderData)(), actionData = (0, import_react3.useActionData)(), idRef = React.useRef(null), titleRef = React.useRef(null), tagsRef = React.useRef(null), bodyRef = React.useRef(null), imageRef = React.useRef(null), noimageRef = React.useRef("false"), [file, setfile] = (0, import_react4.useState)([]), [db_fileName, db_setFileName] = (0, import_react4.useState)([]), submit = (0, import_react_router_dom.useSubmit)();
   React.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.title ? (_b2 = titleRef.current) == null || _b2.focus() : (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.body && ((_d2 = bodyRef.current) == null || _d2.focus());
@@ -467,7 +471,7 @@ function EditNotePage() {
   }, handleSubmit = async (e) => {
     e.preventDefault(), console.log(file.length);
     let formData = new FormData();
-    if (formData.set("id", idRef.current.value), formData.set("title", titleRef.current.value), formData.set("body", bodyRef.current.value), formData.set("noimage", noimageRef.current.checked), file.length !== 0) {
+    if (formData.set("id", idRef.current.value), formData.set("title", titleRef.current.value), formData.set("tags", tagsRef.current.value), formData.set("body", bodyRef.current.value), formData.set("noimage", noimageRef.current.checked), file.length !== 0) {
       let filename = `${(0, import_uuid.v4)()}-${file.name}`, { data: data3, error } = await supabase2.storage.from("files").upload(filename, file, {
         cacheControl: "3600",
         upsert: !1
@@ -506,14 +510,14 @@ function EditNotePage() {
               !1,
               {
                 fileName: "app/routes/notes.edit.$noteId.tsx",
-                lineNumber: 147,
+                lineNumber: 150,
                 columnNumber: 11
               },
               this
             ),
             /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Titulo: " }, void 0, !1, {
               fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 154,
+              lineNumber: 157,
               columnNumber: 11
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
@@ -531,31 +535,31 @@ function EditNotePage() {
               !1,
               {
                 fileName: "app/routes/notes.edit.$noteId.tsx",
-                lineNumber: 155,
+                lineNumber: 158,
                 columnNumber: 11
               },
               this
             )
           ] }, void 0, !0, {
             fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 146,
+            lineNumber: 149,
             columnNumber: 9
           }, this),
           ((_c = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _c.title) && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "pt-1 text-red-700", id: "title-error", children: actionData.errors.title }, void 0, !1, {
             fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 168,
+            lineNumber: 171,
             columnNumber: 11
           }, this)
         ] }, void 0, !0, {
           fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 145,
+          lineNumber: 148,
           columnNumber: 7
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Nota: " }, void 0, !1, {
               fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 176,
+              lineNumber: 179,
               columnNumber: 11
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
@@ -573,30 +577,62 @@ function EditNotePage() {
               !1,
               {
                 fileName: "app/routes/notes.edit.$noteId.tsx",
-                lineNumber: 177,
+                lineNumber: 180,
                 columnNumber: 11
               },
               this
             )
           ] }, void 0, !0, {
             fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 175,
+            lineNumber: 178,
             columnNumber: 9
           }, this),
           ((_f = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _f.body) && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "pt-1 text-red-700", id: "body-error", children: actionData.errors.body }, void 0, !1, {
             fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 191,
+            lineNumber: 194,
             columnNumber: 11
           }, this)
         ] }, void 0, !0, {
           fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 174,
+          lineNumber: 177,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Tags: " }, void 0, !1, {
+            fileName: "app/routes/notes.edit.$noteId.tsx",
+            lineNumber: 208,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+            "input",
+            {
+              ref: tagsRef,
+              name: "tags",
+              defaultValue: data2.note.tags,
+              className: " text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            },
+            void 0,
+            !1,
+            {
+              fileName: "app/routes/notes.edit.$noteId.tsx",
+              lineNumber: 209,
+              columnNumber: 11
+            },
+            this
+          )
+        ] }, void 0, !0, {
+          fileName: "app/routes/notes.edit.$noteId.tsx",
+          lineNumber: 207,
+          columnNumber: 9
+        }, this) }, void 0, !1, {
+          fileName: "app/routes/notes.edit.$noteId.tsx",
+          lineNumber: 206,
           columnNumber: 7
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("label", { className: "flex w-full flex-col gap-1 text-white", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: "Img: " }, void 0, !1, {
             fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 204,
+            lineNumber: 221,
             columnNumber: 11
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
@@ -611,18 +647,18 @@ function EditNotePage() {
             !1,
             {
               fileName: "app/routes/notes.edit.$noteId.tsx",
-              lineNumber: 205,
+              lineNumber: 222,
               columnNumber: 11
             },
             this
           )
         ] }, void 0, !0, {
           fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 203,
+          lineNumber: 220,
           columnNumber: 9
         }, this) }, void 0, !1, {
           fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 202,
+          lineNumber: 219,
           columnNumber: 7
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
@@ -636,13 +672,13 @@ function EditNotePage() {
           !1,
           {
             fileName: "app/routes/notes.edit.$noteId.tsx",
-            lineNumber: 216,
+            lineNumber: 233,
             columnNumber: 9
           },
           this
         ) }, void 0, !1, {
           fileName: "app/routes/notes.edit.$noteId.tsx",
-          lineNumber: 215,
+          lineNumber: 232,
           columnNumber: 7
         }, this)
       ]
@@ -651,7 +687,7 @@ function EditNotePage() {
     !0,
     {
       fileName: "app/routes/notes.edit.$noteId.tsx",
-      lineNumber: 134,
+      lineNumber: 137,
       columnNumber: 5
     },
     this
@@ -664,11 +700,11 @@ __export(notes_noteId_exports, {
   ErrorBoundary: () => ErrorBoundary,
   action: () => action2,
   default: () => NoteDetailsPage,
-  loader: () => loader3
+  loader: () => loader4
 });
 var import_node5 = require("@remix-run/node"), import_react5 = require("@remix-run/react"), import_tiny_invariant2 = __toESM(require("tiny-invariant"));
 var import_react6 = require("@remix-run/react"), import_jsx_dev_runtime4 = require("react/jsx-dev-runtime");
-async function loader3({ request, params }) {
+async function loader4({ request, params }) {
   let env = {
     SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
@@ -684,25 +720,25 @@ async function action2({ request, params }) {
   return (0, import_tiny_invariant2.default)(params.noteId, "noteId not found"), await deleteNote({ userId, id: params.noteId }), (0, import_node5.redirect)("/notes");
 }
 function NoteDetailsPage() {
-  let data2 = (0, import_react5.useLoaderData)(), CDNURL2 = "", navigate = (0, import_react6.useNavigate)();
+  let data2 = (0, import_react5.useLoaderData)(), CDNURL = "", navigate = (0, import_react6.useNavigate)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "bg-dark text-slate-50", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-2xl font-bold", children: data2.note.title }, void 0, !1, {
       fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 57,
+      lineNumber: 54,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { dangerouslySetInnerHTML: { __html: data2.note.body.replace(/\n/g, "<br />") } }, void 0, !1, {
       fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 58,
+      lineNumber: 55,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "py-6", children: data2.note.img && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("img", { src: `${data2.note.img}`, alt: "dd", style: { width: "100px" } }, void 0, !1, {
       fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 59,
+      lineNumber: 56,
       columnNumber: 43
     }, this) }, void 0, !1, {
       fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 59,
+      lineNumber: 56,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_react5.Form, { method: "post", children: [
@@ -718,7 +754,7 @@ function NoteDetailsPage() {
         !1,
         {
           fileName: "app/routes/notes.$noteId.tsx",
-          lineNumber: 62,
+          lineNumber: 59,
           columnNumber: 9
         },
         this
@@ -735,19 +771,19 @@ function NoteDetailsPage() {
         !1,
         {
           fileName: "app/routes/notes.$noteId.tsx",
-          lineNumber: 65,
+          lineNumber: 62,
           columnNumber: 9
         },
         this
       )
     ] }, void 0, !0, {
       fileName: "app/routes/notes.$noteId.tsx",
-      lineNumber: 61,
+      lineNumber: 58,
       columnNumber: 7
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 56,
+    lineNumber: 53,
     columnNumber: 5
   }, this);
 }
@@ -758,22 +794,22 @@ function ErrorBoundary() {
     error.message
   ] }, void 0, !0, {
     fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 80,
+    lineNumber: 77,
     columnNumber: 12
   }, this) : (0, import_react5.isRouteErrorResponse)(error) ? error.status === 404 ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { children: "Note not found" }, void 0, !1, {
     fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 88,
+    lineNumber: 85,
     columnNumber: 12
   }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { children: [
     "An unexpected error occurred: ",
     error.statusText
   ] }, void 0, !0, {
     fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 91,
+    lineNumber: 88,
     columnNumber: 10
   }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h1", { children: "Unknown Error" }, void 0, !1, {
     fileName: "app/routes/notes.$noteId.tsx",
-    lineNumber: 84,
+    lineNumber: 81,
     columnNumber: 12
   }, this);
 }
@@ -782,9 +818,9 @@ function ErrorBoundary() {
 var imagemanager_exports = {};
 __export(imagemanager_exports, {
   default: () => imagemanager,
-  loader: () => loader4
+  loader: () => loader5
 });
-var import_react7 = require("react"), import_react_bootstrap = require("react-bootstrap"), import_Button2 = __toESM(require("react-bootstrap/Button")), import_supabase_js3 = require("@supabase/supabase-js"), import_node6 = require("@remix-run/node"), import_react8 = __toESM(require("react")), import_uuid2 = require("uuid"), import_server_runtime = require("@remix-run/server-runtime");
+var import_react7 = require("react"), import_react_bootstrap = require("react-bootstrap"), import_Button2 = __toESM(require("react-bootstrap/Button")), import_supabase_js3 = require("@supabase/supabase-js"), import_node6 = require("@remix-run/node"), import_react8 = __toESM(require("react")), import_uuid2 = require("uuid"), import_server_runtime2 = require("@remix-run/server-runtime");
 
 // app/components/modal.tsx
 var import_Button = __toESM(require("react-bootstrap/Button")), import_Modal = __toESM(require("react-bootstrap/Modal")), import_jsx_dev_runtime5 = require("react/jsx-dev-runtime");
@@ -834,16 +870,16 @@ function Example({ title, children, show, setShow, showFooterButtons }) {
 var modal_default = Example;
 
 // app/routes/imagemanager.tsx
-var import_react9 = require("@remix-run/react"), import_tfi = require("react-icons/tfi"), import_jsx_dev_runtime6 = require("react/jsx-dev-runtime"), CDNURL = "https://jrppesgzrtbbqriuypku.supabase.co/storage/v1/object/public/files/", loader4 = async ({ request }) => {
-  let userId = await getUserId(request), env = {
+var import_react9 = require("@remix-run/react"), import_tfi = require("react-icons/tfi"), import_jsx_dev_runtime6 = require("react/jsx-dev-runtime"), loader5 = async ({ request }) => {
+  let userId = await getUserId(request), CDNURL = process.env.SUPABASE_URL_RAW, env = {
     SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
   };
-  return userId ? (0, import_node6.json)({ userId, env }) : (0, import_server_runtime.redirect)("/login");
+  return userId ? (0, import_node6.json)({ userId, env, CDNURL }) : (0, import_server_runtime2.redirect)("/login");
 };
 function imagemanager() {
   var _a;
-  let data2 = (0, import_react9.useLoaderData)(), [url, setUrl] = (0, import_react7.useState)(""), urlRef = import_react8.default.useRef(null), formUploadRef = import_react8.default.useRef(null), fileNewNameRef = import_react8.default.useRef(null), [filesData, setFilesData] = (0, import_react7.useState)([]), [file, setfile] = (0, import_react7.useState)([]), [user, setUser] = (0, import_react7.useState)(data2.userId), [urlType, setUrlType] = (0, import_react7.useState)(""), newFolderRef = import_react8.default.useRef(null), uploadTxtRef = import_react8.default.useRef(null), [show, setShow] = (0, import_react7.useState)(!1), [showRenomear, setShowRenomear] = (0, import_react7.useState)(!1), [fileCopyAction, setFileCopyAction] = (0, import_react7.useState)(""), [folderCopyAction, setFolderCopyAction] = (0, import_react7.useState)(""), [selectFile, setSelectFile] = (0, import_react7.useState)(""), bucket = "files", supabase6 = (0, import_supabase_js3.createClient)(data2.env.SUPABASE_URL_RAW, data2.env.SUPABASE_ANON_KEY, {
+  let data2 = (0, import_react9.useLoaderData)(), [url, setUrl] = (0, import_react7.useState)(""), urlRef = import_react8.default.useRef(null), formUploadRef = import_react8.default.useRef(null), fileNewNameRef = import_react8.default.useRef(null), [filesData, setFilesData] = (0, import_react7.useState)([]), [file, setfile] = (0, import_react7.useState)([]), [user, setUser] = (0, import_react7.useState)(data2.userId), [urlType, setUrlType] = (0, import_react7.useState)(""), newFolderRef = import_react8.default.useRef(null), uploadTxtRef = import_react8.default.useRef(null), [show, setShow] = (0, import_react7.useState)(!1), [showRenomear, setShowRenomear] = (0, import_react7.useState)(!1), [fileCopyAction, setFileCopyAction] = (0, import_react7.useState)(""), [folderCopyAction, setFolderCopyAction] = (0, import_react7.useState)(""), [selectFile, setSelectFile] = (0, import_react7.useState)(""), bucket = "files", CDNURL = data2.env.SUPABASE_URL_RAW + "/storage/v1/object/public/files", supabase6 = (0, import_supabase_js3.createClient)(data2.env.SUPABASE_URL_RAW, data2.env.SUPABASE_ANON_KEY, {
     db: {
       schema: "custom"
     },
@@ -936,11 +972,11 @@ function imagemanager() {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: " text-white pt-10 pb-2 text-center", style: { width: "80%", margin: "auto" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h4", { children: "Gerenciador de arquivos" }, void 0, !1, {
       fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 365,
+      lineNumber: 366,
       columnNumber: 17
     }, this) }, void 0, !1, {
       fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 364,
+      lineNumber: 365,
       columnNumber: 13
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(modal_default, { title: "Renomear arquivo", show: showRenomear, setShow: setShowRenomear, showFooterButtons: !1, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
@@ -959,17 +995,17 @@ function imagemanager() {
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Group, { className: "mb-3", controlId: "formBasicEmail", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Label, { children: "Digite o novo nome" }, void 0, !1, {
               fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 415,
+              lineNumber: 416,
               columnNumber: 29
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Control, { type: "text", ref: fileNewNameRef, defaultValue: url.split("/").pop(), name: "fileNewName" }, void 0, !1, {
               fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 416,
+              lineNumber: 417,
               columnNumber: 29
             }, this)
           ] }, void 0, !0, {
             fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 414,
+            lineNumber: 415,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
@@ -983,14 +1019,14 @@ function imagemanager() {
             !1,
             {
               fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 418,
+              lineNumber: 419,
               columnNumber: 25
             },
             this
           )
         ] }, void 0, !0, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 413,
+          lineNumber: 414,
           columnNumber: 21
         }, this)
       },
@@ -998,13 +1034,13 @@ function imagemanager() {
       !1,
       {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 401,
+        lineNumber: 402,
         columnNumber: 17
       },
       this
     ) }, void 0, !1, {
       fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 400,
+      lineNumber: 401,
       columnNumber: 13
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(modal_default, { title: "Enviar arquivo", show, setShow, showFooterButtons: !1, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
@@ -1023,11 +1059,11 @@ function imagemanager() {
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Group, { controlId: "formFileSm", className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Form.Control, { type: "file", size: "sm", name: "image", onChange: (event) => handleFileSelected(event), accept: "image" }, void 0, !1, {
             fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 450,
+            lineNumber: 451,
             columnNumber: 27
           }, this) }, void 0, !1, {
             fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 448,
+            lineNumber: 449,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
@@ -1041,14 +1077,14 @@ function imagemanager() {
             !1,
             {
               fileName: "app/routes/imagemanager.tsx",
-              lineNumber: 456,
+              lineNumber: 457,
               columnNumber: 25
             },
             this
           )
         ] }, void 0, !0, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 440,
+          lineNumber: 441,
           columnNumber: 21
         }, this)
       },
@@ -1056,13 +1092,13 @@ function imagemanager() {
       !1,
       {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 428,
+        lineNumber: 429,
         columnNumber: 17
       },
       this
     ) }, void 0, !1, {
       fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 427,
+      lineNumber: 428,
       columnNumber: 13
     }, this),
     (_a = uploadTxtRef.current) == null ? void 0 : _a.value,
@@ -1070,28 +1106,28 @@ function imagemanager() {
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup, { className: "mb-3", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => goHome(), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiHome, {}, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 474,
+          lineNumber: 475,
           columnNumber: 27
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 473,
+          lineNumber: 474,
           columnNumber: 25
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 472,
+          lineNumber: 473,
           columnNumber: 21
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => back(), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiArrowCircleLeft, {}, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 479,
+          lineNumber: 480,
           columnNumber: 29
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 478,
+          lineNumber: 479,
           columnNumber: 25
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 477,
+          lineNumber: 478,
           columnNumber: 21
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
@@ -1105,35 +1141,35 @@ function imagemanager() {
           !1,
           {
             fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 482,
+            lineNumber: 483,
             columnNumber: 21
           },
           this
         ),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => goUrl(), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiArrowCircleRight, {}, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 490,
+          lineNumber: 491,
           columnNumber: 29
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 489,
+          lineNumber: 490,
           columnNumber: 25
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 488,
+          lineNumber: 489,
           columnNumber: 21
         }, this),
         urlType == "img" && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup.Text, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_Button2.default, { variant: "primary", onClick: () => navigator.clipboard.writeText(data2.env.SUPABASE_URL_RAW + "/storage/v1/object/public/files/" + user + "/" + urlRef.current.value), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_tfi.TfiClipboard, {}, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 497,
+          lineNumber: 498,
           columnNumber: 33
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 496,
+          lineNumber: 497,
           columnNumber: 29
         }, this) }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 495,
+          lineNumber: 496,
           columnNumber: 25
         }, this),
         (urlType == "folder" || url == "" || url == "/") && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
@@ -1145,27 +1181,27 @@ function imagemanager() {
             children: [
               urlType == "folder" && fileCopyAction && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => fileCopyDo(), children: "Colar" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 514,
+                lineNumber: 515,
                 columnNumber: 29
               }, this),
               urlType == "folder" && selectFile && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => movePaste(), children: "Colar" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 518,
+                lineNumber: 519,
                 columnNumber: 29
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "1", onClick: () => goNewFolder(), children: "Nova pasta" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 521,
+                lineNumber: 522,
                 columnNumber: 25
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "2", onClick: () => goUpload(), children: "Enviar arquivo" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 522,
+                lineNumber: 523,
                 columnNumber: 25
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "3", onClick: () => deleteFolder(), children: "Excluir pasta" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 523,
+                lineNumber: 524,
                 columnNumber: 25
               }, this)
             ]
@@ -1174,7 +1210,7 @@ function imagemanager() {
           !0,
           {
             fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 502,
+            lineNumber: 503,
             columnNumber: 25
           },
           this
@@ -1188,22 +1224,22 @@ function imagemanager() {
             children: [
               /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "4", onClick: () => setShowRenomear(!0), children: "Renomear arquivo" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 532,
+                lineNumber: 533,
                 columnNumber: 29
               }, this),
               !fileCopyAction && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "5", onClick: () => setFileCopyAction(url), children: "Copiar arquivo" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 534,
+                lineNumber: 535,
                 columnNumber: 33
               }, this),
               !selectFile && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "6", onClick: () => setSelectFile(url), children: "Cortar arquivo" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 537,
+                lineNumber: 538,
                 columnNumber: 33
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Dropdown.Item, { eventKey: "6", onClick: () => goDelete(), children: "Excluir arquivo" }, void 0, !1, {
                 fileName: "app/routes/imagemanager.tsx",
-                lineNumber: 539,
+                lineNumber: 540,
                 columnNumber: 29
               }, this)
             ]
@@ -1212,86 +1248,86 @@ function imagemanager() {
           !0,
           {
             fileName: "app/routes/imagemanager.tsx",
-            lineNumber: 527,
+            lineNumber: 528,
             columnNumber: 25
           },
           this
         )
       ] }, void 0, !0, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 471,
+        lineNumber: 472,
         columnNumber: 17
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("br", {}, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 543,
+        lineNumber: 544,
         columnNumber: 17
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Row, { xs: 1, md: 4, className: "g-4", children: urlType !== "img" && filesData.filter((x) => !x.name.includes("undefined") && x.name !== ".initial").map((image) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Col, { children: image.id ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card.Img, { variant: "top", style: { width: "50vw", height: "38vh", objectFit: "cover" }, src: CDNURL + "/" + user + "/" + url + "/" + image.name, onClick: () => {
         setUrlType("img"), setUrl(url + "/" + image.name);
       } }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 577,
+        lineNumber: 578,
         columnNumber: 29
       }, this) }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 576,
+        lineNumber: 577,
         columnNumber: 25
       }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card, { style: { backgroundColor: "#19376D" }, onClick: () => {
         setUrlType("folder"), list_files(url, image.name);
       }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.Card.Body, { children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("img", { src: "/img/folder2.png", alt: "" }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 565,
+          lineNumber: 566,
           columnNumber: 37
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_react_bootstrap.InputGroup, { className: "mb-3 pl-2", style: { color: "white" }, children: image.name }, void 0, !1, {
           fileName: "app/routes/imagemanager.tsx",
-          lineNumber: 568,
+          lineNumber: 569,
           columnNumber: 37
         }, this)
       ] }, void 0, !0, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 563,
+        lineNumber: 564,
         columnNumber: 33
       }, this) }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 561,
+        lineNumber: 562,
         columnNumber: 29
       }, this) }, CDNURL + "/" + image.name, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 559,
+        lineNumber: 560,
         columnNumber: 21
       }, this)) }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 556,
+        lineNumber: 557,
         columnNumber: 17
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: urlType == "img" && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "w-100 d-flex justify-content-center mt-2 mb-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("img", { src: CDNURL + "/" + user + "/" + url }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 619,
+        lineNumber: 620,
         columnNumber: 29
       }, this) }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 618,
+        lineNumber: 619,
         columnNumber: 25
       }, this) }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 596,
+        lineNumber: 597,
         columnNumber: 21
       }, this) }, void 0, !1, {
         fileName: "app/routes/imagemanager.tsx",
-        lineNumber: 594,
+        lineNumber: 595,
         columnNumber: 17
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/imagemanager.tsx",
-      lineNumber: 470,
+      lineNumber: 471,
       columnNumber: 13
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/imagemanager.tsx",
-    lineNumber: 362,
+    lineNumber: 363,
     columnNumber: 9
   }, this);
 }
@@ -1321,9 +1357,9 @@ function NoteIndexPage() {
 // app/routes/healthcheck.tsx
 var healthcheck_exports = {};
 __export(healthcheck_exports, {
-  loader: () => loader5
+  loader: () => loader6
 });
-async function loader5({ request }) {
+async function loader6({ request }) {
   let host = request.headers.get("X-Forwarded-Host") ?? request.headers.get("host");
   try {
     let url = new URL("/", `http://${host}`);
@@ -1474,22 +1510,22 @@ var notes_new_exports = {};
 __export(notes_new_exports, {
   action: () => action4,
   default: () => NewNotePage2,
-  loader: () => loader6,
+  loader: () => loader7,
   supabase: () => supabase4
 });
 var import_node8 = require("@remix-run/node"), import_react12 = require("@remix-run/react"), React4 = __toESM(require("react")), import_react_router_dom2 = require("react-router-dom");
 var import_react13 = require("react"), import_supabase_js5 = require("@supabase/supabase-js");
 var import_jsx_dev_runtime9 = require("react/jsx-dev-runtime");
 var supabase4 = (0, import_supabase_js5.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
-async function loader6({ request, params }) {
+async function loader7({ request, params }) {
   let env = {
     SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
-  }, userId = await requireUserId(request), folders = await getFolderListItems({ userId });
-  return console.log("folders:", folders), (0, import_node8.json)({ folders, env });
+  }, userId = await requireUserId(request);
+  return (0, import_node8.json)({ env });
 }
 async function action4({ request }) {
-  let userId = await requireUserId(request), formData = await request.formData(), folder = formData.get("folder"), title = formData.get("title"), body = formData.get("body"), image = formData.get("image");
+  let userId = await requireUserId(request), formData = await request.formData(), title = formData.get("title"), body = formData.get("body"), tags = formData.get("tags"), image = formData.get("image");
   if (console.log(title, body, image), typeof title != "string" || title.length === 0)
     return (0, import_node8.json)(
       { errors: { title: "Title is required", body: null } },
@@ -1500,13 +1536,13 @@ async function action4({ request }) {
       { errors: { title: null, body: "Body is required" } },
       { status: 400 }
     );
-  let note = await createNote({ folder, title, body, img: image, userId });
+  let note = await createNote({ title, body, img: image, tags, userId });
   return (0, import_node8.redirect)(`/notes/${note.id}`);
 }
 function NewNotePage2() {
-  var _a, _b, _c, _d;
-  let data2 = (0, import_react12.useLoaderData)(), actionData = (0, import_react12.useActionData)(), titleRef = React4.useRef(null), bodyRef = React4.useRef(null), imageRef = React4.useRef(null), [file, setfile] = (0, import_react13.useState)([]), [filesData, setFilesData] = (0, import_react13.useState)([]), [db_fileName, db_setFileName] = (0, import_react13.useState)([]), submit = (0, import_react_router_dom2.useSubmit)();
-  console.log("data:", data2.folders), React4.useEffect(() => {
+  var _a, _b, _c, _d, _e, _f;
+  let data2 = (0, import_react12.useLoaderData)(), actionData = (0, import_react12.useActionData)(), titleRef = React4.useRef(null), bodyRef = React4.useRef(null), tagsRef = React4.useRef(null), imageRef = React4.useRef(null), [file, setfile] = (0, import_react13.useState)([]), [filesData, setFilesData] = (0, import_react13.useState)([]), [db_fileName, db_setFileName] = (0, import_react13.useState)([]), submit = (0, import_react_router_dom2.useSubmit)();
+  React4.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.title ? (_b2 = titleRef.current) == null || _b2.focus() : (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.body && ((_d2 = bodyRef.current) == null || _d2.focus());
   }, [actionData]);
@@ -1537,60 +1573,41 @@ function NewNotePage2() {
         width: "100%"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { htmlFor: "folder", className: "flex w-full flex-col gap-1  text-gray-50", children: [
-            "Pasta",
-            /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("select", { id: "folder", name: "folder", className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6", children: data2.folders.map(
-              (item) => /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("option", { value: item.id, children: item.name }, item.id, !1, {
-                fileName: "app/routes/notes.new.tsx",
-                lineNumber: 135,
-                columnNumber: 15
-              }, this)
-            ) }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { htmlFor: "title", className: "flex w-full flex-col gap-1  text-gray-50", children: [
+          "Titulo:",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+            "input",
+            {
+              autoFocus: !0,
+              ref: titleRef,
+              id: "title",
+              name: "title",
+              className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
+              "aria-invalid": (_a = actionData == null ? void 0 : actionData.errors) != null && _a.title ? !0 : void 0,
+              "aria-errormessage": (_b = actionData == null ? void 0 : actionData.errors) != null && _b.title ? "title-error" : void 0
+            },
+            void 0,
+            !1,
+            {
               fileName: "app/routes/notes.new.tsx",
-              lineNumber: 133,
+              lineNumber: 142,
               columnNumber: 13
-            }, this)
-          ] }, void 0, !0, {
-            fileName: "app/routes/notes.new.tsx",
-            lineNumber: 132,
-            columnNumber: 13
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { htmlFor: "title", className: "flex w-full flex-col gap-1  text-gray-50", children: [
-            "Titulo:",
-            /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
-              "input",
-              {
-                ref: titleRef,
-                id: "title",
-                name: "title",
-                className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
-                "aria-invalid": (_a = actionData == null ? void 0 : actionData.errors) != null && _a.title ? !0 : void 0,
-                "aria-errormessage": (_b = actionData == null ? void 0 : actionData.errors) != null && _b.title ? "title-error" : void 0
-              },
-              void 0,
-              !1,
-              {
-                fileName: "app/routes/notes.new.tsx",
-                lineNumber: 140,
-                columnNumber: 13
-              },
-              this
-            )
-          ] }, void 0, !0, {
-            fileName: "app/routes/notes.new.tsx",
-            lineNumber: 139,
-            columnNumber: 13
-          }, this)
+            },
+            this
+          )
         ] }, void 0, !0, {
           fileName: "app/routes/notes.new.tsx",
-          lineNumber: 130,
+          lineNumber: 141,
+          columnNumber: 13
+        }, this) }, void 0, !1, {
+          fileName: "app/routes/notes.new.tsx",
+          lineNumber: 132,
           columnNumber: 9
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("span", { children: "Texto: " }, void 0, !1, {
             fileName: "app/routes/notes.new.tsx",
-            lineNumber: 154,
+            lineNumber: 157,
             columnNumber: 13
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
@@ -1607,24 +1624,55 @@ function NewNotePage2() {
             !1,
             {
               fileName: "app/routes/notes.new.tsx",
-              lineNumber: 155,
+              lineNumber: 158,
               columnNumber: 13
             },
             this
           )
         ] }, void 0, !0, {
           fileName: "app/routes/notes.new.tsx",
-          lineNumber: 153,
+          lineNumber: 156,
           columnNumber: 11
         }, this) }, void 0, !1, {
           fileName: "app/routes/notes.new.tsx",
-          lineNumber: 152,
+          lineNumber: 155,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { htmlFor: "tags", className: "flex w-full flex-col gap-1  text-gray-50", children: [
+          "Marcadores:",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+            "input",
+            {
+              autoFocus: !0,
+              ref: tagsRef,
+              id: "tags",
+              name: "tags",
+              className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6",
+              "aria-invalid": (_e = actionData == null ? void 0 : actionData.errors) != null && _e.title ? !0 : void 0,
+              "aria-errormessage": (_f = actionData == null ? void 0 : actionData.errors) != null && _f.title ? "title-error" : void 0
+            },
+            void 0,
+            !1,
+            {
+              fileName: "app/routes/notes.new.tsx",
+              lineNumber: 173,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, !0, {
+          fileName: "app/routes/notes.new.tsx",
+          lineNumber: 172,
+          columnNumber: 9
+        }, this) }, void 0, !1, {
+          fileName: "app/routes/notes.new.tsx",
+          lineNumber: 171,
           columnNumber: 9
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("span", { children: "Imagem: " }, void 0, !1, {
             fileName: "app/routes/notes.new.tsx",
-            lineNumber: 171,
+            lineNumber: 188,
             columnNumber: 11
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
@@ -1638,18 +1686,18 @@ function NewNotePage2() {
             !1,
             {
               fileName: "app/routes/notes.new.tsx",
-              lineNumber: 172,
+              lineNumber: 189,
               columnNumber: 11
             },
             this
           )
         ] }, void 0, !0, {
           fileName: "app/routes/notes.new.tsx",
-          lineNumber: 170,
+          lineNumber: 187,
           columnNumber: 9
         }, this) }, void 0, !1, {
           fileName: "app/routes/notes.new.tsx",
-          lineNumber: 169,
+          lineNumber: 186,
           columnNumber: 9
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "text-left mt-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
@@ -1663,13 +1711,13 @@ function NewNotePage2() {
           !1,
           {
             fileName: "app/routes/notes.new.tsx",
-            lineNumber: 188,
+            lineNumber: 205,
             columnNumber: 11
           },
           this
         ) }, void 0, !1, {
           fileName: "app/routes/notes.new.tsx",
-          lineNumber: 187,
+          lineNumber: 204,
           columnNumber: 9
         }, this)
       ]
@@ -1678,16 +1726,178 @@ function NewNotePage2() {
     !0,
     {
       fileName: "app/routes/notes.new.tsx",
-      lineNumber: 119,
+      lineNumber: 121,
       columnNumber: 7
     },
     this
   ) }, void 0, !1, {
     fileName: "app/routes/notes.new.tsx",
-    lineNumber: 118,
+    lineNumber: 120,
     columnNumber: 5
   }, this);
 }
+
+// app/routes/projects.tsx
+var projects_exports = {};
+__export(projects_exports, {
+  action: () => action5,
+  default: () => Project,
+  loader: () => loader8
+});
+var import_node9 = require("@remix-run/node"), import_react14 = require("@remix-run/react"), React5 = __toESM(require("react"));
+
+// app/models/project.server.ts
+async function getProjectList({ userId }) {
+  return console.log("userId", userId), await prisma.project.findMany({
+    where: { userId },
+    select: { id: !0, name: !0 },
+    orderBy: { updatedAt: "desc" }
+  });
+}
+function adicionaZero2(numero) {
+  return numero <= 9 ? "0" + numero : numero;
+}
+var dataAtual2 = new Date(), dataAtualFormatada2 = adicionaZero2(dataAtual2.getDate().toString()) + adicionaZero2(dataAtual2.getMonth() + 1).toString() + dataAtual2.getFullYear();
+console.log(dataAtualFormatada2);
+
+// app/routes/projects.tsx
+var import_react15 = require("react");
+var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime");
+async function loader8({ request, params }) {
+  let userId = await requireUserId(request);
+  console.log("userId:", userId);
+  let data2 = getProjectList({ userId });
+  return console.log("data:", data2), (0, import_node9.json)({ userId, data: data2 });
+}
+async function action5({ request }) {
+  let userId = await requireUserId(request), name = (await request.formData()).get("name");
+  return console.log("name:", name), (0, import_node9.redirect)("/notes");
+}
+function Project() {
+  let data2 = (0, import_react14.useLoaderData)(), [projects, setProjects] = (0, import_react15.useState)(data2), nameRef = React5.useRef(null);
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "p-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+    import_react14.Form,
+    {
+      name: "form1",
+      method: "post",
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        width: "100%"
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { children: projects }, void 0, !1, {
+            fileName: "app/routes/projects.tsx",
+            lineNumber: 60,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("h2", { className: "text-gray-50", children: "Nova pasta" }, void 0, !1, {
+            fileName: "app/routes/projects.tsx",
+            lineNumber: 61,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("label", { className: "flex w-full flex-col gap-1  text-gray-50", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("span", { children: "Nome: " }, void 0, !1, {
+              fileName: "app/routes/projects.tsx",
+              lineNumber: 63,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+              "input",
+              {
+                autoFocus: !0,
+                ref: nameRef,
+                id: "name",
+                name: "name",
+                className: "w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6"
+              },
+              void 0,
+              !1,
+              {
+                fileName: "app/routes/projects.tsx",
+                lineNumber: 64,
+                columnNumber: 13
+              },
+              this
+            )
+          ] }, void 0, !0, {
+            fileName: "app/routes/projects.tsx",
+            lineNumber: 62,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, !0, {
+          fileName: "app/routes/projects.tsx",
+          lineNumber: 59,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "text-left mt-3", children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+            "button",
+            {
+              type: "submit",
+              className: "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400",
+              children: "Salvar"
+            },
+            void 0,
+            !1,
+            {
+              fileName: "app/routes/projects.tsx",
+              lineNumber: 75,
+              columnNumber: 11
+            },
+            this
+          ),
+          " ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(import_react14.Link, { to: "/notes", children: "Cencelar" }, void 0, !1, {
+            fileName: "app/routes/projects.tsx",
+            lineNumber: 81,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, !0, {
+          fileName: "app/routes/projects.tsx",
+          lineNumber: 73,
+          columnNumber: 9
+        }, this)
+      ]
+    },
+    void 0,
+    !0,
+    {
+      fileName: "app/routes/projects.tsx",
+      lineNumber: 49,
+      columnNumber: 7
+    },
+    this
+  ) }, void 0, !1, {
+    fileName: "app/routes/projects.tsx",
+    lineNumber: 47,
+    columnNumber: 5
+  }, this);
+}
+
+// app/routes/showRes.tsx
+var showRes_exports = {};
+__export(showRes_exports, {
+  loader: () => loader9
+});
+var import_node10 = require("@remix-run/node"), import_supabase_js6 = require("@supabase/supabase-js"), loader9 = async ({ request }) => {
+  let url = new URL(request.url), field = url.searchParams.get("field") || "", value = url.searchParams.get("value");
+  console.log(field, value);
+  let env = {
+    SUPABASE_URL_RAW: process.env.SUPABASE_URL_RAW,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
+  }, supabase6 = (0, import_supabase_js6.createClient)(env.SUPABASE_URL_RAW, env.SUPABASE_ANON_KEY);
+  if ((field == null ? void 0 : field.length) > 0) {
+    let { data: data2, error } = await supabase6.from("Note").select();
+    return console.log("data:", data2), (0, import_node10.json)(data2, 200);
+  } else {
+    console.log("!!!!!!!!!!!!!!");
+    let { data: data2, error } = await supabase6.from("Note").select("id");
+    return console.log("data:", data2), console.log("error:", error), (0, import_node10.json)(data2, 200);
+  }
+};
 
 // app/routes/_index.tsx
 var index_exports = {};
@@ -1695,15 +1905,15 @@ __export(index_exports, {
   default: () => Index,
   meta: () => meta
 });
-var import_react16 = require("@remix-run/react");
+var import_react18 = require("@remix-run/react");
 
 // app/utils.ts
-var import_react14 = require("@remix-run/react"), import_react15 = require("react"), DEFAULT_REDIRECT = "/";
+var import_react16 = require("@remix-run/react"), import_react17 = require("react"), DEFAULT_REDIRECT = "/";
 function safeRedirect(to, defaultRedirect = DEFAULT_REDIRECT) {
   return !to || typeof to != "string" || !to.startsWith("/") || to.startsWith("//") ? defaultRedirect : to;
 }
 function useMatchesData(id) {
-  let matchingRoutes = (0, import_react14.useMatches)(), route = (0, import_react15.useMemo)(
+  let matchingRoutes = (0, import_react16.useMatches)(), route = (0, import_react17.useMemo)(
     () => matchingRoutes.find((route2) => route2.id === id),
     [matchingRoutes, id]
   );
@@ -1730,17 +1940,17 @@ function validateEmail(email) {
 }
 
 // app/routes/_index.tsx
-var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime"), meta = () => [{ title: "Remix Notes" }];
+var import_jsx_dev_runtime11 = require("react/jsx-dev-runtime"), meta = () => [{ title: "Remix Notes" }];
 function Index() {
   let user = useOptionalUser();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("main", { className: "bg-dark relative min-h-screen sm:flex sm:items-center sm:justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "relative sm:pb-16 sm:pt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "mx-auto max-w-7xl sm:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "relative shadow-xl sm:overflow-hidden sm:rounded-2xl", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "absolute inset-0" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("main", { className: "bg-dark relative min-h-screen sm:flex sm:items-center sm:justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "relative sm:pb-16 sm:pt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "mx-auto max-w-7xl sm:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "relative shadow-xl sm:overflow-hidden sm:rounded-2xl", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "absolute inset-0" }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
       lineNumber: 15,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "relative px-4 pb-8 pt-5 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-15", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("h3", { className: "text-center text-4xl font-extrabold tracking-tight sm:text-4xl lg:text-4xl", children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("span", { className: "block uppercase text-yellow-500 drop-shadow-md", children: "MW Notes2" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "relative px-4 pb-8 pt-5 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-15", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("h3", { className: "text-center text-4xl font-extrabold tracking-tight sm:text-4xl lg:text-4xl", children: /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("span", { className: "block uppercase text-yellow-500 drop-shadow-md", children: "MW Notes2" }, void 0, !1, {
         fileName: "app/routes/_index.tsx",
         lineNumber: 25,
         columnNumber: 17
@@ -1749,8 +1959,8 @@ function Index() {
         lineNumber: 24,
         columnNumber: 15
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center", children: user ? /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
-        import_react16.Link,
+      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center", children: user ? /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
+        import_react18.Link,
         {
           to: "/notes",
           className: "flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8",
@@ -1767,9 +1977,9 @@ function Index() {
           columnNumber: 19
         },
         this
-      ) : /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
-          import_react16.Link,
+      ) : /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("div", { className: "space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
+          import_react18.Link,
           {
             to: "/join",
             className: "flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8",
@@ -1784,8 +1994,8 @@ function Index() {
           },
           this
         ),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
-          import_react16.Link,
+        /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
+          import_react18.Link,
           {
             to: "/login",
             className: "flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600",
@@ -1836,15 +2046,15 @@ function Index() {
 // app/routes/login2.tsx
 var login2_exports = {};
 __export(login2_exports, {
-  loader: () => loader7
+  loader: () => loader10
 });
-var import_node9 = require("@remix-run/node"), import_auth_helpers_remix = require("@supabase/auth-helpers-remix"), loader7 = async ({ request }) => {
+var import_node11 = require("@remix-run/node"), import_auth_helpers_remix = require("@supabase/auth-helpers-remix"), loader10 = async ({ request }) => {
   let response = new Response(), supabaseClient = (0, import_auth_helpers_remix.createServerClient)(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_ANON_KEY,
     { request, response }
   ), { data: data2 } = await supabaseClient.from("test").select("*");
-  return (0, import_node9.json)(
+  return (0, import_node11.json)(
     { data: data2 },
     {
       headers: response.headers
@@ -1855,15 +2065,15 @@ var import_node9 = require("@remix-run/node"), import_auth_helpers_remix = requi
 // app/routes/logout.tsx
 var logout_exports = {};
 __export(logout_exports, {
-  action: () => action5,
-  loader: () => loader8
+  action: () => action6,
+  loader: () => loader11
 });
-var import_node10 = require("@remix-run/node");
-async function action5({ request }) {
+var import_node12 = require("@remix-run/node");
+async function action6({ request }) {
   return logout(request);
 }
-async function loader8() {
-  return (0, import_node10.redirect)("/");
+async function loader11() {
+  return (0, import_node12.redirect)("/");
 }
 
 // app/routes/upload.tsx
@@ -1872,29 +2082,29 @@ __export(upload_exports, {
   default: () => Page,
   supabase: () => supabase5
 });
-var import_react17 = require("react"), import_supabase_js6 = require("@supabase/supabase-js"), import_uuid3 = require("uuid"), import_jsx_dev_runtime11 = require("react/jsx-dev-runtime"), supabase5 = (0, import_supabase_js6.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
+var import_react19 = require("react"), import_supabase_js7 = require("@supabase/supabase-js"), import_uuid3 = require("uuid"), import_jsx_dev_runtime12 = require("react/jsx-dev-runtime"), supabase5 = (0, import_supabase_js7.createClient)("https://lpbqbqcmlspixeiikhcb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwYnFicWNtbHNwaXhlaWlraGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA2NDU1ODksImV4cCI6MTk5NjIyMTU4OX0.EIGOPYgY4iebJJ1jpJNCoioJZSE9XU83ZPWUhCsgUSk");
 function Page() {
-  let [file, setfile] = (0, import_react17.useState)([]);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("form", { onSubmit: async (e) => {
+  let [file, setfile] = (0, import_react19.useState)([]);
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("form", { onSubmit: async (e) => {
     e.preventDefault();
     let filename = `${(0, import_uuid3.v4)()}-${file.name}`, { data: data2, error } = await supabase5.storage.from("files").upload(filename, file, {
       cacheControl: "3600",
       upsert: !1
     }), filepath = data2.path;
   }, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("input", { type: "file", name: "image", onChange: (e) => {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("input", { type: "file", name: "image", onChange: (e) => {
       setfile(e.target.files[0]);
     } }, void 0, !1, {
       fileName: "app/routes/upload.tsx",
       lineNumber: 30,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("br", {}, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("br", {}, void 0, !1, {
       fileName: "app/routes/upload.tsx",
       lineNumber: 31,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("button", { type: "submit", children: "Upload image" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("button", { type: "submit", children: "Upload image" }, void 0, !1, {
       fileName: "app/routes/upload.tsx",
       lineNumber: 32,
       columnNumber: 7
@@ -1909,26 +2119,26 @@ function Page() {
 // app/routes/login.tsx
 var login_exports = {};
 __export(login_exports, {
-  action: () => action6,
+  action: () => action7,
   default: () => LoginPage,
-  loader: () => loader9,
+  loader: () => loader12,
   meta: () => meta2
 });
-var import_node11 = require("@remix-run/node"), import_react18 = require("@remix-run/react"), React5 = __toESM(require("react"));
-var import_jsx_dev_runtime12 = require("react/jsx-dev-runtime");
-async function loader9({ request }) {
+var import_node13 = require("@remix-run/node"), import_react20 = require("@remix-run/react"), React6 = __toESM(require("react"));
+var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime");
+async function loader12({ request }) {
   let userId = await getUserId(request);
-  return console.log("-->userId:", userId), (0, import_node11.json)({});
+  return console.log("-->userId:", userId), (0, import_node13.json)({});
 }
-async function action6({ request }) {
+async function action7({ request }) {
   let formData = await request.formData(), email = formData.get("email"), password = formData.get("password"), redirectTo = safeRedirect(formData.get("redirectTo"), "/notes"), remember = formData.get("remember");
   if (!validateEmail(email))
-    return (0, import_node11.json)(
+    return (0, import_node13.json)(
       { errors: { email: "Email is invalid", password: null } },
       { status: 400 }
     );
   if (typeof password != "string" || password.length === 0)
-    return (0, import_node11.json)(
+    return (0, import_node13.json)(
       { errors: { email: null, password: "Digite a senha" } },
       { status: 400 }
     );
@@ -1938,7 +2148,7 @@ async function action6({ request }) {
     userId: user.id,
     remember: remember === "on",
     redirectTo
-  }) : (0, import_node11.json)(
+  }) : (0, import_node13.json)(
     { errors: { email: "Invalid email or password", password: null } },
     { status: 400 }
   );
@@ -1946,12 +2156,12 @@ async function action6({ request }) {
 var meta2 = () => [{ title: "Login" }];
 function LoginPage() {
   var _a, _b, _c, _d;
-  let [searchParams] = (0, import_react18.useSearchParams)(), redirectTo = searchParams.get("redirectTo") || "/notes", actionData = (0, import_react18.useActionData)(), emailRef = React5.useRef(null), passwordRef = React5.useRef(null);
-  return React5.useEffect(() => {
+  let [searchParams] = (0, import_react20.useSearchParams)(), redirectTo = searchParams.get("redirectTo") || "/notes", actionData = (0, import_react20.useActionData)(), emailRef = React6.useRef(null), passwordRef = React6.useRef(null);
+  return React6.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email ? (_b2 = emailRef.current) == null || _b2.focus() : (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.password && ((_d2 = passwordRef.current) == null || _d2.focus());
-  }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "flex mt-20 min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "mx-auto w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(import_react18.Form, { method: "post", className: "space-y-6", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("h3", { children: "Entrar" }, void 0, !1, {
+  }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex mt-20 min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "mx-auto w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_react20.Form, { method: "post", className: "space-y-6", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h3", { children: "Entrar" }, void 0, !1, {
       fileName: "app/routes/login.tsx",
       lineNumber: 84,
       columnNumber: 66
@@ -1960,8 +2170,8 @@ function LoginPage() {
       lineNumber: 84,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
         "label",
         {
           htmlFor: "email",
@@ -1977,8 +2187,8 @@ function LoginPage() {
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
           "input",
           {
             ref: emailRef,
@@ -2001,7 +2211,7 @@ function LoginPage() {
           },
           this
         ),
-        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email }, void 0, !1, {
+        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email }, void 0, !1, {
           fileName: "app/routes/login.tsx",
           lineNumber: 106,
           columnNumber: 17
@@ -2016,8 +2226,8 @@ function LoginPage() {
       lineNumber: 85,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
         "label",
         {
           htmlFor: "password",
@@ -2033,8 +2243,8 @@ function LoginPage() {
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
           "input",
           {
             id: "password",
@@ -2055,7 +2265,7 @@ function LoginPage() {
           },
           this
         ),
-        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password }, void 0, !1, {
+        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password }, void 0, !1, {
           fileName: "app/routes/login.tsx",
           lineNumber: 132,
           columnNumber: 17
@@ -2070,12 +2280,12 @@ function LoginPage() {
       lineNumber: 113,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: redirectTo }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: redirectTo }, void 0, !1, {
       fileName: "app/routes/login.tsx",
       lineNumber: 139,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
       "button",
       {
         type: "submit",
@@ -2091,9 +2301,9 @@ function LoginPage() {
       },
       this
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "flex items-center justify-between", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "flex items-center", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex items-center justify-between", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex items-center", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
           "input",
           {
             id: "remember",
@@ -2110,7 +2320,7 @@ function LoginPage() {
           },
           this
         ),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
           "label",
           {
             htmlFor: "remember",
@@ -2131,11 +2341,11 @@ function LoginPage() {
         lineNumber: 147,
         columnNumber: 13
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("div", { className: "text-center text-sm text-gray-500", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "text-center text-sm text-gray-500", children: [
         "Ainda n\xE3o tem conta?",
         " ",
-        /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
-          import_react18.Link,
+        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+          import_react20.Link,
           {
             className: "text-blue-500 underline",
             to: {
@@ -2182,17 +2392,56 @@ function LoginPage() {
 var notes_exports = {};
 __export(notes_exports, {
   default: () => NotesPage,
-  loader: () => loader10
+  loader: () => loader13
 });
-var import_node12 = require("@remix-run/node"), import_react19 = require("@remix-run/react");
-var import_react_router_dom3 = require("react-router-dom"), import_react20 = require("react"), import_jsx_dev_runtime13 = require("react/jsx-dev-runtime");
-async function loader10({ request }) {
+var import_node14 = require("@remix-run/node"), import_react21 = require("@remix-run/react");
+var import_react_router_dom3 = require("react-router-dom"), import_react22 = require("react"), import_react_arborist = require("react-arborist"), import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
+async function loader13({ request }) {
   let userId = await requireUserId(request), noteListItems = await getNoteListItems({ userId });
-  return (0, import_node12.json)({ noteListItems });
+  return console.log(4, noteListItems), (0, import_node14.json)(noteListItems);
 }
 function NotesPage() {
-  let navigate = (0, import_react_router_dom3.useNavigate)(), data2 = (0, import_react19.useLoaderData)(), user = useUser(), [showSideBar, setShowSideBar] = (0, import_react20.useState)(!1);
-  (0, import_react20.useEffect)(() => {
+  let navigate = (0, import_react_router_dom3.useNavigate)(), data2 = (0, import_react21.useLoaderData)();
+  console.log("data:", data2);
+  let user = useUser(), [showSideBar, setShowSideBar] = (0, import_react22.useState)(!0), [dataTree, setDataTree] = (0, import_react22.useState)(data2);
+  function Node({ node, style, dragHandle }) {
+    return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { style, ref: dragHandle, children: [
+      node.isLeaf ? "" : "\u{1F5C0}",
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("a", { className: "no-underline", href: "/notes/" + node.data.id, children: node.data.title }, void 0, !1, {
+        fileName: "app/routes/notes.tsx",
+        lineNumber: 35,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/routes/notes.tsx",
+      lineNumber: 33,
+      columnNumber: 7
+    }, this);
+  }
+  let data22 = [
+    { id: "1", name: "Unread", link: "/notes" },
+    { id: "2", name: "Threads" },
+    {
+      id: "3",
+      name: "Chat Rooms",
+      children: [
+        { id: "c1", name: "General" },
+        { id: "c2", name: "Random" },
+        { id: "c3", name: "Open Source Projects" }
+      ]
+    },
+    {
+      id: "4",
+      name: "Direct Messages",
+      children: [
+        { id: "d1", name: "Alice" },
+        { id: "d2", name: "Bob" },
+        { id: "d3", name: "Charlie" }
+      ]
+    }
+  ];
+  (0, import_react22.useEffect)(() => {
+    setDataTree(data2);
     function handleResize() {
       window.innerWidth < 380 && setShowSideBar(!1);
     }
@@ -2201,33 +2450,34 @@ function NotesPage() {
   let handleToggleSideBar = () => {
     setShowSideBar(!showSideBar);
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex h-full min-h-screen flex-col", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("header", { className: "flex pt-6 items-center justify-between bg-slate-800 p-2 text-white no-underline", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h5", { className: "text-1xl font-sans	pt-1 pl-2", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_react19.Link, { to: ".", className: "no-underline text-yellow-500", children: "MW Notes" }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 46,
-        columnNumber: 11
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 45,
-        columnNumber: 9
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("button", { onClick: () => {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex h-full min-h-screen flex-col", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("header", { className: "flex pt-6 items-center justify-between bg-slate-800 p-2 text-white no-underline", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("button", { onClick: () => {
         handleToggleSideBar();
-      }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("svg", { className: "w-6 h-6", "aria-hidden": "true", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("path", { clipRule: "evenodd", fillRule: "evenodd", d: "M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" }, void 0, !1, {
+      }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("svg", { className: "w-6 h-6", "aria-hidden": "true", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { clipRule: "evenodd", fillRule: "evenodd", d: "M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" }, void 0, !1, {
         fileName: "app/routes/notes.tsx",
-        lineNumber: 50,
-        columnNumber: 15
+        lineNumber: 89,
+        columnNumber: 13
       }, this) }, void 0, !1, {
         fileName: "app/routes/notes.tsx",
-        lineNumber: 49,
+        lineNumber: 88,
         columnNumber: 11
       }, this) }, void 0, !1, {
         fileName: "app/routes/notes.tsx",
-        lineNumber: 48,
+        lineNumber: 87,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_react19.Form, { action: "/logout", method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("h5", { className: "text-1xl font-sans	pt-1 pl-2", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Link, { to: ".", className: "no-underline text-yellow-500", children: "MW Notes" }, void 0, !1, {
+        fileName: "app/routes/notes.tsx",
+        lineNumber: 93,
+        columnNumber: 11
+      }, this) }, void 0, !1, {
+        fileName: "app/routes/notes.tsx",
+        lineNumber: 92,
+        columnNumber: 9
+      }, this),
+      user.id,
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Form, { action: "/logout", method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
         "button",
         {
           type: "submit",
@@ -2238,122 +2488,113 @@ function NotesPage() {
         !1,
         {
           fileName: "app/routes/notes.tsx",
-          lineNumber: 55,
+          lineNumber: 98,
           columnNumber: 11
         },
         this
       ) }, void 0, !1, {
         fileName: "app/routes/notes.tsx",
-        lineNumber: 54,
+        lineNumber: 97,
         columnNumber: 9
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/notes.tsx",
-      lineNumber: 44,
+      lineNumber: 85,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("main", { className: "flex h-full", children: [
-      showSideBar && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("aside", { id: "default-sidebar", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "h-full w-140 pt-2", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("button", { onClick: () => navigate("/folderNew"), type: "button", className: "m-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  border-blue-700 rounded", children: "+ pasta" }, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 71,
-          columnNumber: 11
-        }, this),
-        " ",
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("br", {}, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 73,
-          columnNumber: 21
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("button", { type: "button", onClick: () => navigate("new"), className: "m-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  border-blue-700 rounded", children: "+ nota" }, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 74,
-          columnNumber: 11
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("br", {}, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 85,
-          columnNumber: 11
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("br", {}, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 85,
-          columnNumber: 16
-        }, this),
-        data2.noteListItems.length === 0 ? /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("p", { className: "p-2", children: "Nenhuma nota ainda" }, void 0, !1, {
-          fileName: "app/routes/notes.tsx",
-          lineNumber: 89,
-          columnNumber: 13
-        }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("ol", { children: data2.noteListItems.map((note, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { children: [
-          index == 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "text-slate-100", children: note.folder.name }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("main", { className: "flex h-full", children: [
+      showSideBar && /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("aside", { className: " pl-5 w-[150px] py-3 ", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("a", { href: "/notes/new", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("svg", { className: "h-6 w-6 text-gray-400", width: "24", height: "24", viewBox: "0 0 24 24", strokeWidth: "2", stroke: "currentColor", fill: "none", strokeLinecap: "round", strokeLinejoin: "round", children: [
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { stroke: "none", d: "M0 0h24v24H0z" }, void 0, !1, {
             fileName: "app/routes/notes.tsx",
-            lineNumber: 97,
-            columnNumber: 30
+            lineNumber: 117,
+            columnNumber: 212
           }, this),
-          data2.noteListItems[index == 0 ? 0 : index - 1].folder.id !== data2.noteListItems[index].folder.id && /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "text-slate-100", children: note.folder.name }, void 0, !1, {
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { d: "M14 3v4a1 1 0 0 0 1 1h4" }, void 0, !1, {
             fileName: "app/routes/notes.tsx",
-            lineNumber: 98,
-            columnNumber: 108
+            lineNumber: 117,
+            columnNumber: 253
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("ul", { className: "flex space-x-1", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("li", { className: "text-slate-300 ml-[-15%]", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(
-            import_react19.NavLink,
-            {
-              className: ({ isActive }) => `block no-underline p-1 text-base ${isActive ? "text-green-400" : "text-slate-100"}`,
-              to: note.id,
-              children: note.title
-            },
-            void 0,
-            !1,
-            {
-              fileName: "app/routes/notes.tsx",
-              lineNumber: 101,
-              columnNumber: 21
-            },
-            this
-          ) }, void 0, !1, {
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("path", { d: "M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" }, void 0, !1, {
             fileName: "app/routes/notes.tsx",
-            lineNumber: 100,
-            columnNumber: 19
-          }, this) }, void 0, !1, {
+            lineNumber: 117,
+            columnNumber: 291
+          }, this),
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("line", { x1: "12", y1: "11", x2: "12", y2: "17" }, void 0, !1, {
             fileName: "app/routes/notes.tsx",
-            lineNumber: 99,
-            columnNumber: 19
+            lineNumber: 117,
+            columnNumber: 376
+          }, this),
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("line", { x1: "9", y1: "14", x2: "15", y2: "14" }, void 0, !1, {
+            fileName: "app/routes/notes.tsx",
+            lineNumber: 117,
+            columnNumber: 418
           }, this)
-        ] }, note.id, !0, {
+        ] }, void 0, !0, {
           fileName: "app/routes/notes.tsx",
-          lineNumber: 95,
-          columnNumber: 17
-        }, this)) }, void 0, !1, {
+          lineNumber: 117,
+          columnNumber: 32
+        }, this) }, void 0, !1, {
           fileName: "app/routes/notes.tsx",
-          lineNumber: 91,
-          columnNumber: 13
-        }, this)
+          lineNumber: 117,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+          import_react_arborist.Tree,
+          {
+            initialData: dataTree,
+            openByDefault: !0,
+            width: 150,
+            height: 1e3,
+            indent: 24,
+            rowHeight: 25,
+            overscanCount: 1,
+            paddingTop: 20,
+            paddingBottom: 5,
+            padding: 10,
+            children: Node
+          },
+          void 0,
+          !1,
+          {
+            fileName: "app/routes/notes.tsx",
+            lineNumber: 118,
+            columnNumber: 11
+          },
+          this
+        )
       ] }, void 0, !0, {
         fileName: "app/routes/notes.tsx",
-        lineNumber: 68,
-        columnNumber: 9
-      }, this) }, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 67,
-        columnNumber: 7
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex-1 p-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_react19.Outlet, {}, void 0, !1, {
-        fileName: "app/routes/notes.tsx",
-        lineNumber: 120,
+        lineNumber: 116,
         columnNumber: 11
       }, this) }, void 0, !1, {
         fileName: "app/routes/notes.tsx",
-        lineNumber: 118,
+        lineNumber: 115,
+        columnNumber: 7
+      }, this),
+      !1,
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex-1 p-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Outlet, {}, void 0, !1, {
+        fileName: "app/routes/notes.tsx",
+        lineNumber: 188,
+        columnNumber: 11
+      }, this) }, void 0, !1, {
+        fileName: "app/routes/notes.tsx",
+        lineNumber: 187,
         columnNumber: 9
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/notes.tsx",
-      lineNumber: 64,
+      lineNumber: 112,
       columnNumber: 7
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/notes.tsx",
-    lineNumber: 43,
+    lineNumber: 84,
     columnNumber: 5
   }, this);
 }
@@ -2361,36 +2602,36 @@ function NotesPage() {
 // app/routes/join.tsx
 var join_exports = {};
 __export(join_exports, {
-  action: () => action7,
+  action: () => action8,
   default: () => Join,
-  loader: () => loader11,
+  loader: () => loader14,
   meta: () => meta3
 });
-var import_node13 = require("@remix-run/node"), import_react21 = require("@remix-run/react"), React6 = __toESM(require("react"));
-var import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
-async function loader11({ request }) {
+var import_node15 = require("@remix-run/node"), import_react23 = require("@remix-run/react"), React7 = __toESM(require("react"));
+var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime");
+async function loader14({ request }) {
   let userId = await getUserId(request);
-  return (0, import_node13.json)({});
+  return (0, import_node15.json)({});
 }
-async function action7({ request }) {
+async function action8({ request }) {
   let formData = await request.formData(), email = formData.get("email"), password = formData.get("password"), redirectTo = safeRedirect(formData.get("redirectTo"), "/");
   if (!validateEmail(email))
-    return (0, import_node13.json)(
+    return (0, import_node15.json)(
       { errors: { email: "Email is invalid", password: null } },
       { status: 400 }
     );
   if (typeof password != "string" || password.length === 0)
-    return (0, import_node13.json)(
+    return (0, import_node15.json)(
       { errors: { email: null, password: "Password is required" } },
       { status: 400 }
     );
   if (password.length < 5)
-    return (0, import_node13.json)(
+    return (0, import_node15.json)(
       { errors: { email: null, password: "Password is too short" } },
       { status: 400 }
     );
   if (await getUserByEmail(email))
-    return (0, import_node13.json)(
+    return (0, import_node15.json)(
       {
         errors: {
           email: "A user already exists with this email",
@@ -2410,22 +2651,22 @@ async function action7({ request }) {
 var meta3 = () => [{ title: "Sign Up" }];
 function Join() {
   var _a, _b, _c, _d;
-  let [searchParams] = (0, import_react21.useSearchParams)(), redirectTo = searchParams.get("redirectTo") ?? void 0, actionData = (0, import_react21.useActionData)(), emailRef = React6.useRef(null), passwordRef = React6.useRef(null);
-  return React6.useEffect(() => {
+  let [searchParams] = (0, import_react23.useSearchParams)(), redirectTo = searchParams.get("redirectTo") ?? void 0, actionData = (0, import_react23.useActionData)(), emailRef = React7.useRef(null), passwordRef = React7.useRef(null);
+  return React7.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email ? (_b2 = emailRef.current) == null || _b2.focus() : (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.password && ((_d2 = passwordRef.current) == null || _d2.focus());
-  }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "mx-auto pt-20 w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react21.Form, { method: "post", className: "space-y-6", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("h3", { children: "Registrar" }, void 0, !1, {
+  }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "flex min-h-full flex-col justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "mx-auto pt-20 w-full max-w-md px-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_react23.Form, { method: "post", className: "space-y-6", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "flex w-full justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("h3", { children: "Registrar" }, void 0, !1, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 89,
+      lineNumber: 91,
       columnNumber: 66
     }, this) }, void 0, !1, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 89,
+      lineNumber: 91,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
         "label",
         {
           htmlFor: "email",
@@ -2436,13 +2677,13 @@ function Join() {
         !1,
         {
           fileName: "app/routes/join.tsx",
-          lineNumber: 91,
+          lineNumber: 93,
           columnNumber: 13
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
           "input",
           {
             ref: emailRef,
@@ -2460,28 +2701,28 @@ function Join() {
           !1,
           {
             fileName: "app/routes/join.tsx",
-            lineNumber: 98,
+            lineNumber: 100,
             columnNumber: 15
           },
           this
         ),
-        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email }, void 0, !1, {
+        ((_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "pt-1 text-red-700", id: "email-error", children: actionData.errors.email }, void 0, !1, {
           fileName: "app/routes/join.tsx",
-          lineNumber: 111,
+          lineNumber: 113,
           columnNumber: 17
         }, this)
       ] }, void 0, !0, {
         fileName: "app/routes/join.tsx",
-        lineNumber: 97,
+        lineNumber: 99,
         columnNumber: 13
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 90,
+      lineNumber: 92,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
         "label",
         {
           htmlFor: "password",
@@ -2492,13 +2733,13 @@ function Join() {
         !1,
         {
           fileName: "app/routes/join.tsx",
-          lineNumber: 119,
+          lineNumber: 121,
           columnNumber: 13
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "mt-1", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "mt-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
           "input",
           {
             id: "password",
@@ -2514,32 +2755,32 @@ function Join() {
           !1,
           {
             fileName: "app/routes/join.tsx",
-            lineNumber: 126,
+            lineNumber: 128,
             columnNumber: 15
           },
           this
         ),
-        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password }, void 0, !1, {
+        ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "pt-1 text-red-700", id: "password-error", children: actionData.errors.password }, void 0, !1, {
           fileName: "app/routes/join.tsx",
-          lineNumber: 137,
+          lineNumber: 139,
           columnNumber: 17
         }, this)
       ] }, void 0, !0, {
         fileName: "app/routes/join.tsx",
-        lineNumber: 125,
+        lineNumber: 127,
         columnNumber: 13
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 118,
+      lineNumber: 120,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: redirectTo }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("input", { type: "hidden", name: "redirectTo", value: redirectTo }, void 0, !1, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 144,
+      lineNumber: 146,
       columnNumber: 11
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
       "button",
       {
         type: "submit",
@@ -2550,16 +2791,16 @@ function Join() {
       !1,
       {
         fileName: "app/routes/join.tsx",
-        lineNumber: 145,
+        lineNumber: 147,
         columnNumber: 11
       },
       this
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("div", { className: "text-center text-sm text-gray-500", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("div", { className: "text-center text-sm text-gray-500", children: [
       "J\xE1 tem uma conta?",
       " ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(
-        import_react21.Link,
+      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+        import_react23.Link,
         {
           className: "text-blue-500 underline",
           to: {
@@ -2572,37 +2813,37 @@ function Join() {
         !1,
         {
           fileName: "app/routes/join.tsx",
-          lineNumber: 154,
+          lineNumber: 156,
           columnNumber: 15
         },
         this
       )
     ] }, void 0, !0, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 152,
+      lineNumber: 154,
       columnNumber: 13
     }, this) }, void 0, !1, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 151,
+      lineNumber: 153,
       columnNumber: 11
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/join.tsx",
-    lineNumber: 88,
+    lineNumber: 90,
     columnNumber: 9
   }, this) }, void 0, !1, {
     fileName: "app/routes/join.tsx",
-    lineNumber: 87,
+    lineNumber: 89,
     columnNumber: 7
   }, this) }, void 0, !1, {
     fileName: "app/routes/join.tsx",
-    lineNumber: 86,
+    lineNumber: 88,
     columnNumber: 5
   }, this);
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "dbf3915f", entry: { module: "/build/entry.client-4KAFWHJW.js", imports: ["/build/_shared/chunk-GTNGNULT.js", "/build/_shared/chunk-ZHWZEVSQ.js", "/build/_shared/chunk-VIPVJV6J.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-4CFGL33H.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-WSFJKSHY.js", imports: ["/build/_shared/chunk-7X35FQYH.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/folderNew": { id: "routes/folderNew", parentId: "root", path: "folderNew", index: void 0, caseSensitive: void 0, module: "/build/routes/folderNew-2LZ5KH4B.js", imports: ["/build/_shared/chunk-E4QSSUG6.js", "/build/_shared/chunk-GLWAIFE6.js", "/build/_shared/chunk-KKQLPYR7.js", "/build/_shared/chunk-SPUIDVFV.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-QB3PEZAZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/imagemanager": { id: "routes/imagemanager", parentId: "root", path: "imagemanager", index: void 0, caseSensitive: void 0, module: "/build/routes/imagemanager-S6LJXLRN.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-KKQLPYR7.js", "/build/_shared/chunk-SPUIDVFV.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-X5LEJRIG.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-7X35FQYH.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-T62UBNAS.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-7X35FQYH.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login2": { id: "routes/login2", parentId: "root", path: "login2", index: void 0, caseSensitive: void 0, module: "/build/routes/login2-VURX4CXJ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-DOMDNNGV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-AO3OMW5O.js", imports: ["/build/_shared/chunk-7X35FQYH.js", "/build/_shared/chunk-E4QSSUG6.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.$noteId": { id: "routes/notes.$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.$noteId-T3HHG36E.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/notes._index": { id: "routes/notes._index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes._index-PA7KYYDT.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.edit.$noteId": { id: "routes/notes.edit.$noteId", parentId: "routes/notes", path: "edit/:noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.edit.$noteId-RAQSP4WB.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-KKQLPYR7.js", "/build/_shared/chunk-SPUIDVFV.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.new": { id: "routes/notes.new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.new-QVFUBDW7.js", imports: ["/build/_shared/chunk-KKQLPYR7.js", "/build/_shared/chunk-SPUIDVFV.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/upload": { id: "routes/upload", parentId: "root", path: "upload", index: void 0, caseSensitive: void 0, module: "/build/routes/upload-4QPQQEII.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-KKQLPYR7.js", "/build/_shared/chunk-SPUIDVFV.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, hmr: void 0, url: "/build/manifest-DBF3915F.js" };
+var assets_manifest_default = { version: "c5fb94d0", entry: { module: "/build/entry.client-BCJNULHS.js", imports: ["/build/_shared/chunk-56KUAJVK.js", "/build/_shared/chunk-OWPABCHM.js", "/build/_shared/chunk-3QIN6FEG.js", "/build/_shared/chunk-DF3EUDCN.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-MODFOBSP.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-Y2LYZVNS.js", imports: ["/build/_shared/chunk-QCJELAVJ.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api.$userid.note.$noteid.show": { id: "routes/api.$userid.note.$noteid.show", parentId: "root", path: "api/:userid/note/:noteid/show", index: void 0, caseSensitive: void 0, module: "/build/routes/api.$userid.note.$noteid.show-VT662FPS.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/folderNew": { id: "routes/folderNew", parentId: "root", path: "folderNew", index: void 0, caseSensitive: void 0, module: "/build/routes/folderNew-GW63X2W6.js", imports: ["/build/_shared/chunk-BOCVWV7G.js", "/build/_shared/chunk-UUXYXIFE.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-A5E2ZC62.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/imagemanager": { id: "routes/imagemanager", parentId: "root", path: "imagemanager", index: void 0, caseSensitive: void 0, module: "/build/routes/imagemanager-NXKOSJUZ.js", imports: ["/build/_shared/chunk-BPFDCX7X.js", "/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-J3BFVYP5.js", imports: ["/build/_shared/chunk-MMIEBQCH.js", "/build/_shared/chunk-QCJELAVJ.js", "/build/_shared/chunk-UUXYXIFE.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-KOTQKVRQ.js", imports: ["/build/_shared/chunk-MMIEBQCH.js", "/build/_shared/chunk-QCJELAVJ.js", "/build/_shared/chunk-UUXYXIFE.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login2": { id: "routes/login2", parentId: "root", path: "login2", index: void 0, caseSensitive: void 0, module: "/build/routes/login2-WNLYJV2F.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-CG5UQZAS.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-BHLD2M34.js", imports: ["/build/_shared/chunk-QCJELAVJ.js", "/build/_shared/chunk-BOCVWV7G.js", "/build/_shared/chunk-UUXYXIFE.js", "/build/_shared/chunk-BPFDCX7X.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.$noteId": { id: "routes/notes.$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.$noteId-EUPXCMFH.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/notes._index": { id: "routes/notes._index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes._index-V4QCG5MN.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.edit.$noteId": { id: "routes/notes.edit.$noteId", parentId: "routes/notes", path: "edit/:noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.edit.$noteId-4GEH2YRQ.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes.new": { id: "routes/notes.new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes.new-ELU2B3MI.js", imports: ["/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-IYC5EABB.js", imports: ["/build/_shared/chunk-UUXYXIFE.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/showRes": { id: "routes/showRes", parentId: "root", path: "showRes", index: void 0, caseSensitive: void 0, module: "/build/routes/showRes-LDO4O2MS.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/upload": { id: "routes/upload", parentId: "root", path: "upload", index: void 0, caseSensitive: void 0, module: "/build/routes/upload-JMLNS53R.js", imports: ["/build/_shared/chunk-OXVWDGG7.js", "/build/_shared/chunk-UHWRWWT5.js", "/build/_shared/chunk-MZ4QRB3L.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, hmr: void 0, url: "/build/manifest-C5FB94D0.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { unstable_cssModules: !1, unstable_cssSideEffectImports: !1, unstable_dev: !1, unstable_postcss: !1, unstable_tailwind: !0, unstable_vanillaExtract: !1, v2_errorBoundary: !0, v2_meta: !0, v2_normalizeFormMethod: !0, v2_routeConvention: !0 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -2613,6 +2854,14 @@ var assetsBuildDirectory = "public/build", future = { unstable_cssModules: !1, u
     index: void 0,
     caseSensitive: void 0,
     module: root_exports
+  },
+  "routes/api.$userid.note.$noteid.show": {
+    id: "routes/api.$userid.note.$noteid.show",
+    parentId: "root",
+    path: "api/:userid/note/:noteid/show",
+    index: void 0,
+    caseSensitive: void 0,
+    module: api_userid_note_noteid_show_exports
   },
   "routes/notes.edit.$noteId": {
     id: "routes/notes.edit.$noteId",
@@ -2669,6 +2918,22 @@ var assetsBuildDirectory = "public/build", future = { unstable_cssModules: !1, u
     index: void 0,
     caseSensitive: void 0,
     module: notes_new_exports
+  },
+  "routes/projects": {
+    id: "routes/projects",
+    parentId: "root",
+    path: "projects",
+    index: void 0,
+    caseSensitive: void 0,
+    module: projects_exports
+  },
+  "routes/showRes": {
+    id: "routes/showRes",
+    parentId: "root",
+    path: "showRes",
+    index: void 0,
+    caseSensitive: void 0,
+    module: showRes_exports
   },
   "routes/_index": {
     id: "routes/_index",

@@ -4,8 +4,8 @@ import bcrypt from "bcryptjs";
 import { prisma } from "~/db.server";
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://jrppesgzrtbbqriuypku.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpycHBlc2d6cnRiYnFyaXV5cGt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIwMjYwMDksImV4cCI6MTk5NzYwMjAwOX0.mVBmQ2FuHX5r4vfrsllMAVZJrrIb3Bx-HjJWyz3HNCo'//process.env.SUPABASE_KEY
+const supabaseUrl = process.env.SUPABASE_URL_RAW!//'https://jrppesgzrtbbqriuypku.supabase.co'
+const supabaseKey = process.env.SUPABASE_ANON_KEY!//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpycHBlc2d6cnRiYnFyaXV5cGt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIwMjYwMDksImV4cCI6MTk5NzYwMjAwOX0.mVBmQ2FuHX5r4vfrsllMAVZJrrIb3Bx-HjJWyz3HNCo'//process.env.SUPABASE_KEY
 
 const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {

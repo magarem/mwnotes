@@ -32,6 +32,7 @@ export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const id = formData.get("id");
   const title = formData.get("title");
+  const tags = formData.get("tags");
   const body = formData.get("body");
   let image = formData.get("image");
   let noimage = formData.get("noimage");
@@ -51,7 +52,7 @@ export async function action({ request }: ActionArgs) {
     );
   }
  
-  const obj: any = { id, title, body, userId }
+  const obj: any = { id, title, body, tags, userId }
   // if (image){
   //   image = "https://lpbqbqcmlspixeiikhcb.supabase.co/storage/v1/object/public/files/" + image
   //   obj.img = image
@@ -75,6 +76,7 @@ export default function EditNotePage() {
   const actionData = useActionData<typeof action>();
   const idRef = React.useRef<HTMLTextAreaElement>(null);
   const titleRef = React.useRef<HTMLTextAreaElement>(null);
+  const tagsRef = React.useRef<HTMLTextAreaElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
   const imageRef = React.useRef<HTMLTextAreaElement>(null);
   const noimageRef = React.useRef<any>('false');
@@ -102,6 +104,7 @@ export default function EditNotePage() {
 
     formData.set("id", idRef.current.value);
     formData.set("title", titleRef.current.value);
+    formData.set("tags", tagsRef.current.value);
     formData.set("body", bodyRef.current.value);
     formData.set("noimage", noimageRef.current.checked);
     
@@ -199,6 +202,20 @@ export default function EditNotePage() {
           <input ref={noimageRef} type="checkbox" id="noimage" name="noimage" value="true"/>
         </label>
       </div> */}
+
+      <div>
+        <label className="flex w-full flex-col gap-1 text-white">
+          <span>Tags: </span>
+          <input
+            ref={tagsRef}
+            name="tags"
+            defaultValue={data.note.tags}
+            className=" text-gray-50 bg-slate-700 border-slate-800 flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+          />
+          {/* <input type="file" name="image" onChange={handleFileSelected} /> */}
+        </label>
+      </div>
+
       <div>
         <label className="flex w-full flex-col gap-1 text-white">
           <span>Img: </span>

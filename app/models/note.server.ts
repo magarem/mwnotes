@@ -11,7 +11,7 @@ export function getNote({
   userId: User["id"];
 }) {
   return prisma.note.findFirst({
-    select: { id: true, body: true, img: true, title: true },
+    select: { id: true, body: true, img: true, title: true, tags: true },
     where: { id, userId },
   });
 }
@@ -33,11 +33,11 @@ export async function getNoteListItems({ userId }: { userId: User["id"] }) {
   
   return await prisma.note.findMany({
     where: { userId },
-    select: { id: true, title: true, folder: true, folderId: true },
+    select: { id: true, title: true },
     // include: {
     //   folder: true,
     // },
-    orderBy: [ {folderId: "asc" }, {updatedAt: "desc" }],
+    orderBy: [ {updatedAt: "desc" }],
   });
 }
 
@@ -112,12 +112,12 @@ const slugify = str =>
 
 
 export function createNote({
-  folder,
   body,
   title,
+  tags,
   img,
   userId,
-}: Pick<Note, "folder" | "body" | "title" | "img"> & {
+}: Pick<Note,  "body" | "title" | "tags" | "img"> & {
   userId: User["id"];
 }) {
 
@@ -130,13 +130,9 @@ export function createNote({
   // writeStream.end();
   return prisma.note.create({
     data: {
-      folder: {
-        connect: {
-          id: folder,
-        }
-      },
       title,
       body,
+      tags,
       img,
       user: {
         connect: {

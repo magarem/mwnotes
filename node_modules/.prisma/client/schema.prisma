@@ -13,7 +13,6 @@ model User {
   email     String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  folder    Folder[]
   note      Note[]
   password  Password?
 }
@@ -24,27 +23,14 @@ model Password {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Folder {
-  id        String   @id @default(cuid())
-  pid       String   @default("")
-  name      String
-  img       String   @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  note      Note[]
-}
-
 model Note {
   id        String   @id @default(cuid())
-  folderId  String
   title     String
   body      String
   img       String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tags      String
   userId    String
-  folder    Folder   @relation(fields: [folderId], references: [id])
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

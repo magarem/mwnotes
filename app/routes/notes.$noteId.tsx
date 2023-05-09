@@ -21,9 +21,6 @@ export async function loader({ request, params }: LoaderArgs) {
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
   }
   
-   
-  
-  
   const userId = await requireUserId(request);
   invariant(params.noteId, "noteId not found");
 

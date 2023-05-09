@@ -31,11 +31,11 @@ export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request);
   // invariant(params.noteId, "noteId not found");
 
-  const folders = await getFolderListItems({ userId });
+  // const folders = await getFolderListItems({ userId });
   
-  console.log('folders:', folders);
+  // console.log('folders:', folders);
 
-  return json({ folders, env });
+  return json({ env });
 }
 
 
@@ -43,9 +43,10 @@ export async function action({ request }: ActionArgs) {
 
   const userId = await requireUserId(request);
   const formData = await request.formData();
-  const folder = formData.get("folder");
+  // const folder = formData.get("folder");
   const title = formData.get("title");
   const body = formData.get("body");
+  const tags = formData.get("tags");
   const image = formData.get("image");
   console.log(title, body, image);
   
@@ -63,7 +64,7 @@ export async function action({ request }: ActionArgs) {
     );
   }
   // img = "https://lpbqbqcmlspixeiikhcb.supabase.co/storage/v1/object/public/files/" + image
-  const note = await createNote({ folder, title, body, img:image, userId });
+  const note = await createNote({ title, body, img:image, tags, userId });
 
   return redirect(`/notes/${note.id}`);
 }
@@ -73,6 +74,7 @@ export default function NewNotePage() {
   const actionData = useActionData<typeof action>();
   const titleRef = React.useRef<HTMLTextAreaElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
+  const tagsRef = React.useRef<HTMLTextAreaElement>(null);
   const imageRef = React.useRef<HTMLTextAreaElement>(null);
   const [file, setfile] = useState([]);
   const [filesData, setFilesData] = useState([]);
@@ -80,7 +82,7 @@ export default function NewNotePage() {
   const submit = useSubmit();
 
 
-  console.log('data:', data.folders);
+  // console.log('data:', data.folders);
   
   React.useEffect(() => {
     if (actionData?.errors?.title) {
@@ -129,15 +131,16 @@ export default function NewNotePage() {
       >
         <div>
           {/* <label className="flex w-full flex-col gap-1  text-gray-50"> */}
-            <label htmlFor="folder" className="flex w-full flex-col gap-1  text-gray-50">Pasta
+            {/* <label htmlFor="folder" className="flex w-full flex-col gap-1  text-gray-50">Pasta
             <select id="folder" name="folder" className="w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6">
              {data.folders.map((item: any)=>
               <option key={item.id} value={item.id}>{item.name}</option>
              )}
             </select>
-            </label>
+            </label> */}
             <label htmlFor="title" className="flex w-full flex-col gap-1  text-gray-50">Titulo: 
             <input
+              autoFocus
               ref={titleRef}
               id="title"
               name="title"
@@ -165,7 +168,21 @@ export default function NewNotePage() {
           </label>
          
         </div>
-
+        <div>
+        <label htmlFor="tags" className="flex w-full flex-col gap-1  text-gray-50">Marcadores: 
+            <input
+              autoFocus
+              ref={tagsRef}
+              id="tags"
+              name="tags"
+              className="w-full flex-1 rounded-md border-0 text-gray-50 bg-slate-700 border-slate-800 px-2 py-2 !outline-none text-lg leading-6"
+              aria-invalid={actionData?.errors?.title ? true : undefined}
+              aria-errormessage={
+                actionData?.errors?.title ? "title-error" : undefined
+              }
+            />
+          </label>
+        </div>
         <div>
         <label className="flex w-full flex-col gap-1  text-gray-50">
           <span>Imagem: </span>

@@ -6,6 +6,8 @@ import * as React from "react";
 import { getUserId, createUserSession } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
+import { createProject } from "~/models/project.server";
+
 import { safeRedirect, validateEmail } from "~/utils";
 
 export async function loader({ request }: LoaderArgs) {
@@ -55,7 +57,7 @@ export async function action({ request }: ActionArgs) {
   }
 
   const user = await createUser(email, password);
-
+  // await createProject('main', user.id)
   return createUserSession({
     request,
     userId: user.id,
